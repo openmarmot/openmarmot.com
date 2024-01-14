@@ -8,6 +8,8 @@ body {
     background-size:cover;
     color : white;
     line-height : 50%;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards; 
 }
 a {
     color:white;
@@ -26,8 +28,17 @@ a:hover {
     display: inline-block;
     padding: 15px;
 }
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 </style>
 </head>
+
 <body>
     <div class="links">
         <p> # welcome to openmarmot.com!</p>
@@ -94,6 +105,11 @@ a:hover {
         <p># -- python --</p>
         <a href="https://www.fullstackpython.com/">full stack python </a> <br><br>
         <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">flask mega tutorial </a> <br><br>
+        <br>
+
+        <br>
+        <p># -- Online Learning --</p>
+        <a href="https://ocw.mit.edu/">MIT open courseware </a> <br><br>
         <br>
 
         <br>
