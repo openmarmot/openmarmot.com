@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dry Fire</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        #startBtn, #resetBtn {
+            padding: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: green;
+            display: none;
+        }
+        #getReadyContainer {
+            font-size: 48px;
+            font-weight: bold;
+        }
+        #modeSelector {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="modeSelector">
+        <label><input type="radio" name="mode" value="single" checked> Single</label>
+        <label><input type="radio" name="mode" value="continuous"> Continuous</label>
+    </div>
+    <div id="startContainer">
+        <button id="startBtn">Start</button>
+    </div>
+    <div id="getReadyContainer" style="display: none;">Get Ready</div>
+    <div id="circle"></div>
+    <div id="resetContainer" style="display: none;">
+        <button id="resetBtn">Reset</button>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const startContainer = document.getElementById('startContainer');
+        const getReadyContainer = document.getElementById('getReadyContainer');
+        const circle = document.getElementById('circle');
+        const resetContainer = document.getElementById('resetContainer');
+        const modeSelector = document.getElementById('modeSelector');
+
+        startBtn.addEventListener('click', startGame);
+        resetBtn.addEventListener('click', resetGame);
+
+        document.addEventListener('keydown', (event) => {
+            if (startContainer.style.display !== 'none') {
+                startBtn.click();
+            } else if (resetContainer.style.display !== 'none') {
+                resetBtn.click();
+            }
+        });
+
+        function startGame() {
+            startContainer.style.display = 'none';
+            modeSelector.style.display = 'none';
+            getReadyContainer.style.display = 'block';
+            const readyTime = Math.random() * 2000 + 3000;
+            setTimeout(showCircle, readyTime);
+        }
+
+        function showCircle() {
+            getReadyContainer.style.display = 'none';
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+            circle.style.display = 'block';
+            setTimeout(changeCircleColor, 2000);
+        }
+
+        function changeCircleColor() {
+            circle.style.backgroundColor = 'red';
+            const selectedMode = getSelectedMode();
+            if (selectedMode === 'single') {
+                resetContainer.style.display = 'block';
+            } else {
+                setTimeout(resetGame, 2000);
+            }
+        }
+
+        function resetGame() {
+            resetContainer.style.display = 'none';
+            circle.style.display = 'none';
+            circle.style.backgroundColor = 'green';
+            const selectedMode = getSelectedMode();
+            if (selectedMode === 'single') {
+                startContainer.style.display = 'block';
+                modeSelector.style.display = 'block';
+            } else {
+                startGame();
+            }
+        }
+
+        function getSelectedMode() {
+            const radioButtons = document.getElementsByName('mode');
+            for (const radioButton of radioButtons) {
+                if (radioButton.checked) {
+                    return radioButton.value;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
