@@ -7,13 +7,14 @@
     <style>
         /* Add your CSS here */
         .square {
-            width: 10px;
-            height: 10px;
-            margin: 1px;
-            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin: 0.5px;
+            float: left;
+            line-height: 5px;
         }
-        .lived { background-color: #00A6FB; }
-        .remaining { background-color: #FFBF00; }
+        .lived { background-color: #8099a5; }
+        .remaining { background-color: #4853b6; }
         .legend {
             margin-top: 20px;
         }
@@ -27,6 +28,12 @@
             height: 10px;
             margin-right: 5px;
             display: inline-block;
+        }
+        .legend-text {
+            margin-left: 10px;
+        }
+        #visualization {
+            overflow: hidden;
         }
     </style>
 </head>
@@ -48,12 +55,14 @@
 
     <div class="legend">
         <div class="legend-item">
-            <div class="legend-square" style="background-color: #00A6FB;"></div>
-            <span>Weeks Lived</span>
+            <div class="legend-square" style="background-color: #8099a5;"></div>
+            <span>Weeks Lived:</span>
+            <span id="weeksLived" class="legend-text"></span>
         </div>
         <div class="legend-item">
-            <div class="legend-square" style="background-color: #FFBF00;"></div>
-            <span>Weeks Remaining</span>
+            <div class="legend-square" style="background-color: #4853b6;"></div>
+            <span>Weeks Remaining:</span>
+            <span id="weeksRemaining" class="legend-text"></span>
         </div>
     </div>
 
@@ -65,6 +74,7 @@
             let lifeExpectancyWeeks = (sex === 'male') ? 79 * 52 : 83 * 52;
             const weeksRemaining = lifeExpectancyWeeks - weeksLived;
 
+            // Update visualization
             const visualization = document.getElementById('visualization');
             visualization.innerHTML = ''; // Clear previous visualization
 
@@ -79,6 +89,10 @@
                 square.classList.add('square', 'remaining');
                 visualization.appendChild(square);
             }
+
+            // Update legend with week counts
+            document.getElementById('weeksLived').textContent = weeksLived;
+            document.getElementById('weeksRemaining').textContent = weeksRemaining;
         }
     </script>
 </body>
