@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Inspector</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        textarea { width: 100%; height: 150px; margin: 10px 0; }
+        button { padding: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<h1>Email Inspector</h1>
+<textarea id="emailText" placeholder="Paste the plain text source of the email here..."></textarea>
+<br>
+<button onclick="inspectEmail()">Inspect Email</button>
+<div id="result"></div>
+
+<script>
+    function inspectEmail() {
+        const emailText = document.getElementById('emailText').value;
+        const resultDiv = document.getElementById('result');
+        
+        // Here you would implement more sophisticated scam detection logic.
+        // This is a very basic example:
+        
+        let analysis = {
+            subject: extractPattern(emailText,'Subject'),
+            from: extractPattern(emailText,'From',true),
+            to: extractPattern(emailText,'To'),
+            xMailFrom: extractPattern(emailText,'X-Mail-from'),
+            xGetMessageSender: extractPattern(emailText,'X-Get-Message-Sender-Via'),
+            deliveredTo:extractPattern(emailText,'X-Delivered-to'),
+            originalDeliveredTo:extractPattern(emailText,'X-Original-Delivered-to')
+        };
+
+        let scamIndicators=checkForScamIndicators(emailText,analysis)
+        // Convert the array of scam indicators into a string where each item is on a new line
+        let indicatorsHtml = scamIndicators.length > 0 
+            ? scamIndicators.map(indicator => `<li>${indicator}</li>`).join('') 
+            : 'None detected';
+
+        resultDiv.innerHTML = `<h2>Analysis Results:</h2>
+        <p><strong>Subject:</strong> ${analysis.subject || 'Not found'}</p>
+        <p><strong>From:</strong> ${analysis.from || 'Not found'}</p>
+        <p><strong>To:</strong> ${analysis.to || 'Not found'}</p>
+        <p><strong>X-Mail-from:</strong> ${analysis.xMailFrom || 'Not found'}</p>
+        <p><strong>X-Get-Message-Sender-Via:</strong> ${analysis.xGetMessageSender || 'Not found'}</p>
+        <p><strong>X-Original-Delivered-to:</strong> ${analysis.originalDeliveredTo || 'Not found'}</p>
+        <p><strong>X-Delivered-to:</strong> ${analysis.deliveredTo || 'Not found'}</p>
+        <p><strong>Possible Scam Indicators:</strong></p>
+        <ul>${indicatorsHtml}</ul>`;
+    }
+
+    function extractPattern(text,pattern,caseSensitive=false) {
+
+        // Escape special characters in pattern to safely use in regex
+        const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+        // Determine the regex flags based on case sensitivity
+        const flags = caseSensitive ? '' : 'i';
+
+        // Construct the regex using a template literal for better readability
+        const regex = new RegExp(`${escapedPattern}: (.*)`, flags);
+        
+        const match = text.match(regex);
+        return match ? match[1].trim() : null;
+    }
+
+    function extractFrom(text) {
+        const match = text.match(/From: (.*)/);
+        return match ? match[1].trim() : null;
+    }
+
+    function extractTo(text) {
+        const match = text.match(/To: (.*)/);
+        return match ? match[1].trim() : null;
+    }
+
+    function checkForScamIndicators(text,analysis) {
+        let indicators = [];
+        if (/urgent|immediate action|verify your account|click here|you've won/i.test(text)) {
+            indicators.push("Urgency or suspicious phrases");
+        }
+        if (!text.includes('From:') || !text.includes('To:')) {
+            indicators.push("Missing standard email headers");
+        }
+
+        // is the email being relayed?
+        if (analysis.deliveredTo && analysis.originalDeliveredTo) {
+            if (analysis.deliveredTo !== analysis.originalDeliveredTo) {
+                indicators.push("Delivered-to and Original-Delivered-to don't match. The email may be relayed for fraud purposes");
+            }
+        }
+
+
+        // Add more checks here like domain analysis, known scam phrases, etc.
+        return indicators;
+    }
+</script>
+</body>
+</html>
