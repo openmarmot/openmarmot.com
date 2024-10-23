@@ -31,7 +31,7 @@
         let analysis = {
             subject: extractPattern(emailText,'Subject'),
             from: extractPattern(emailText,'From',true),
-            to: extractPattern(emailText,'To'),
+            to: extractPattern(emailText,'To',true),
             xMailFrom: extractPattern(emailText,'X-Mail-from'),
             xGetMessageSender: extractPattern(emailText,'X-Get-Message-Sender-Via'),
             deliveredTo:extractPattern(emailText,'X-Delivered-to'),
@@ -56,17 +56,16 @@
         <ul>${indicatorsHtml}</ul>`;
     }
 
-    function extractPattern(text,pattern,caseSensitive=false) {
-
-        // Escape special characters in pattern to safely use in regex
+    function extractPattern(text, pattern, caseSensitive = false) {
+        // Escape special characters in the pattern to safely use in regex
         const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
         // Determine the regex flags based on case sensitivity
-        const flags = caseSensitive ? '' : 'i';
+        const flags = caseSensitive ? 'm' : 'im'; // Add 'm' for multiline
 
-        // Construct the regex using a template literal for better readability
-        const regex = new RegExp(`${escapedPattern}: (.*)`, flags);
-        
+        // Construct the regex using word boundaries and line start anchor
+        const regex = new RegExp(`^${escapedPattern}: (.*)`, flags);
+
         const match = text.match(regex);
         return match ? match[1].trim() : null;
     }
@@ -81,25 +80,80 @@
         return match ? match[1].trim() : null;
     }
 
-    function checkForScamIndicators(text,analysis) {
+    function checkForScamIndicators(text, analysis) {
         let indicators = [];
-        if (/urgent|immediate action|verify your account|click here|you've won/i.test(text)) {
+
+        // Urgent language and suspicious phrases
+        if (/urgent|immediate action|verify your account|click here|you've won|reset password|verify identity|payment|invoice|authorization|exclusive offer|free gift/i.test(text)) {
             indicators.push("Urgency or suspicious phrases");
         }
+
+        // Missing standard headers
         if (!text.includes('From:') || !text.includes('To:')) {
             indicators.push("Missing standard email headers");
         }
 
-        // is the email being relayed?
+        // To delivered to mismatch
         if (analysis.deliveredTo && analysis.originalDeliveredTo) {
             if (analysis.deliveredTo !== analysis.originalDeliveredTo) {
                 indicators.push("Delivered-to and Original-Delivered-to don't match. The email may be relayed for fraud purposes");
             }
         }
 
+        // To and delivered to mismatch
+        if (analysis.to && analysis.deliveredTo) {
+            if (analysis.to !== analysis.deliveredTo) {
+                indicators.push('To: does not match DeliveredTo:')
+            }
+        }
 
-        // Add more checks here like domain analysis, known scam phrases, etc.
+        // Inconsistent headers - Check Return-Path vs From
+        const returnPath = extractPattern(text, 'Return-Path');
+        if (returnPath && analysis.from && !returnPath.includes(analysis.from.split('@')[1])) {
+            indicators.push("Return-Path does not match the domain in the From address.");
+        }
+
+        // Detect suspicious Unicode characters (e.g., Cyrillic letters in Latin domains)
+        if (/[^\x00-\x7F]/.test(analysis.from) || /[^\x00-\x7F]/.test(analysis.xMailFrom)){
+            indicators.push("Suspicious non-ASCII characters detected in the From address.");
+        }
+
+        // Analyze received headers for unusual routing (basic check for now)
+        const receivedHeaders = text.match(/Received: (.*)/g);
+        if (receivedHeaders && receivedHeaders.length > 3) {
+            indicators.push("Multiple 'Received' headers detected, which may indicate the email was routed through unusual paths.");
+        }
+
+        // Check for mismatched URLs
+        const mismatchedUrls = detectMismatchedUrls(text);
+        if (mismatchedUrls.length > 0) {
+            indicators.push(`Mismatched URLs detected: ${mismatchedUrls.join(', ')}`);
+        }
+
+        // Add more checks as needed
         return indicators;
+    }
+
+    function detectMismatchedUrls(text) {
+        let mismatchedUrls = [];
+        const urlRegex = /<a href="([^"]+)">([^<]+)<\/a>/g;
+        let match;
+
+        while ((match = urlRegex.exec(text)) !== null) {
+            const actualUrl = match[1].trim();
+            const displayedText = match[2].trim();
+
+            // Check if displayed text looks like a URL but does not match the actual URL
+            if (isLikelyUrl(displayedText) && !actualUrl.includes(displayedText)) {
+                mismatchedUrls.push(`Displayed: ${displayedText}, Actual: ${actualUrl}`);
+            }
+        }
+        return mismatchedUrls;
+    }
+
+    function isLikelyUrl(text) {
+        // Basic check to determine if a string looks like a URL
+        return /^(http:\/\/|https:\/\/|www\.)/.test(text) || /\.\w{2,}$/.test(text);
     }
 </script>
 </body>
