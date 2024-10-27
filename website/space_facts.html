@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Facts!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1d;
+            color: #e0e0e0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card {
+            width: 100%;
+            height: 400px;
+            perspective: 1000px;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;  /* Changed to column */
+            justify-content: center;
+            align-items: left;
+            padding: 10px;  /* Added some padding for better spacing */
+            text-align: center;
+        }
+        .card-back {
+            text-align: left;
+        }
+        .card-front {
+            background-color: #333;
+        }
+        .card-back {
+            background-color: #2c3e50;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>The Solar System</h2>
+                </div>
+                <div class="card-back">
+                    <h3>The Solar System</h3>
+                    <p>The Solar System is a gravitationally bound system 
+                        of the Sun and the objects that order it</p>
+                    <p> AU or Astronomical Unit: The distance between the 
+                        Sun and Earth. 1 AU ≈ 149,597,870.7 kilometers or 92,955,807.2 miles</p>
+                    <li>Sun</li>
+                    <li>Mercury : 0.31-0.59 AU from the Sun</li>
+                    <li>Venus : 0.72-0.73 AU from the Sun</li>
+                    <li>Earth : 0.98-1.02 AU from the Sun</li>
+                    <li>Mars : 1.38-1.67 AU from the Sun</li>
+                    <li>Astroid Belt : 2.3-3.3 AU from the Sun</li>
+                    <li>Jupiter : 4.95-5.46 AU from the Sun</li>
+                    <li>Saturn : 9.08-10.12 AU from the Sun</li>
+                    <li>Uranus : 18.3-20.1 AU from the Sun</li>
+                    <li>Neptune : 29.9-30.5 AU from the Sun</li>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>The Milky Way</h2>
+                </div>
+                <div class="card-back">
+                    <h3>Milky Way</h3>
+                    <p>Our galaxy, the Milky Way, is a barred spiral galaxy with an estimated 100-400 billion stars. It is part of the Local Group of galaxies which forms part of the Virgo Supercluster.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Black Holes</h2>
+                </div>
+                <div class="card-back">
+                    <h3>Black Holes</h3>
+                    <p>Black holes are regions of spacetime where gravity is so strong that nothing, not even light, can escape. They are thought to result from the warping of spacetime caused by a very heavy object.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Neptune's Moons</h2>
+                </div>
+                <div class="card-back">
+                    <h3>Neptune's Moons</h3>
+                    <p>Neptune has 14 known moons. The largest, Triton, orbits in a direction opposite to Neptune's other moons, suggesting it might have been captured by Neptune's gravity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
