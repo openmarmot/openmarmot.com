@@ -166,7 +166,7 @@ function render() {
     ctx.fillText(`Altitude: ${-(Math.round(lander.y )-540)}`, 10, textY+=15);
     ctx.fillText(`Vertical Speed: ${Math.round(lander.speedY)}`, 10, textY+=15);
     ctx.fillText(`Horizontal Speed: ${Math.round(lander.speedX)}`, 10, textY+=15);
-    ctx.fillText(`Angle: ${radiansToDegreesNormalized(lander.rotation)}`, 10, textY+=15);
+    ctx.fillText(`Angle: ${Math.round(radiansToDegreesNormalized(lander.rotation))}`, 10, textY+=15);
     //ctx.fillText(`radians: ${lander.rotation}`, 10, textY+=15);
     //ctx.fillText(`x: ${lander.x}`, 10, textY+=15);
     //ctx.fillText(`y: ${lander.y}`, 10, textY+=15);
