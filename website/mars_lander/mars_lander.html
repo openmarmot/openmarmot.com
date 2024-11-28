@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Lander</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+        #restartButton {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+        }
+        body {
+            background-color: #333; 
+        }
+        a:link {
+        color: rgb(219, 60, 11);
+        background-color: transparent;
+        text-decoration: none;
+        }
+
+        a:visited {
+        color: rgb(219, 60, 11);
+        background-color: transparent;
+        text-decoration: none;
+        }
+
+        a:hover {
+        color: red;
+        background-color: transparent;
+        text-decoration: underline;
+        }
+
+        a:active {
+        color: yellow;
+        background-color: transparent;
+        text-decoration: underline;
+        }
+        p {
+            color: rgb(219, 60, 11);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <button id="restartButton" style="display:none;">Restart Game</button>
+    <script src="marsLander.js"></script>
+    <center>
+        <br>
+        <p>Controls:  [w] - Thrust,  [a] [d] - Rotate</p>
+        <a href="https://github.com/openmarmot/mars_lander">Github link</a>
+        
+
+    </center>
+
+</body>
+</html>
+</html>
