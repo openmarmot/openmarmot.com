@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS VPC CIDR Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>AWS VPC CIDR Calculator</h1>
+    
+    <div class="input-group">
+        <label for="numSubnets">Number of Subnets:</label>
+        <input type="number" id="numSubnets" min="1" max="16" value="2">
+    </div>
+
+    <div class="input-group">
+        <label for="minHosts">Minimum Hosts per Subnet:</label>
+        <input type="number" id="minHosts" min="1" value="250">
+    </div>
+
+    <button onclick="calculateCIDR()">Calculate</button>
+
+    <div id="results" class="result"></div>
+
+    <script>
+        function intToIP(int) {
+            return [
+                (int >>> 24) & 255,
+                (int >>> 16) & 255,
+                (int >>> 8) & 255,
+                int & 255
+            ].join('.');
+        }
+
+        function calculateSubnetRange(baseIP, cidr) {
+            const numAddresses = Math.pow(2, 32 - cidr);
+            const start = baseIP + 1;
+            const end = baseIP + numAddresses - 2;
+            return {
+                network: intToIP(baseIP),
+                firstUsable: intToIP(start),
+                lastUsable: intToIP(end),
+                broadcast: intToIP(baseIP + numAddresses - 1)
+            };
+        }
+
+        function formatCIDR(baseIP, cidr) {
+            const octets = [
+                (baseIP >>> 24) & 255,
+                (baseIP >>> 16) & 255,
+                (baseIP >>> 8) & 255,
+                baseIP & 255
+            ];
+            return `${octets.join('.')}/${cidr}`;
+        }
+
+        function calculateCIDR() {
+            const numSubnets = parseInt(document.getElementById('numSubnets').value);
+            const minHosts = parseInt(document.getElementById('minHosts').value);
+
+            // Calculate required subnet bits
+            const requiredHosts = minHosts + 2;
+            const hostBits = Math.ceil(Math.log2(requiredHosts));
+            const subnetBits = Math.ceil(Math.log2(numSubnets));
+            
+            // Calculate VPC CIDR
+            const vpcCidrBits = Math.min(32 - (hostBits + subnetBits), 16);
+            const vpcNetmask = 32 - vpcCidrBits;
+            
+            // Calculate subnet CIDR
+            const subnetCidrBits = 32 - hostBits;
+
+            // Generate results HTML
+            let resultsHTML = `
+                <h2>Results:</h2>
+                <p>Recommended VPC CIDR: 10.0.0.0/${vpcNetmask}</p>
+                <p>Subnet CIDR block size: /${subnetCidrBits}</p>
+                <table>
+                    <tr>
+                        <th>Subnet</th>
+                        <th>CIDR Block</th>
+                        <th>Network Address</th>
+                        <th>First Usable IP</th>
+                        <th>Last Usable IP</th>
+                        <th>Broadcast Address</th>
+                        <th>Available IPs</th>
+                    </tr>
+            `;
+
+            // Generate subnet CIDRs
+            for (let i = 0; i < numSubnets; i++) {
+                const subnetSize = Math.pow(2, 32 - subnetCidrBits);
+                const baseIP = (10 << 24) + (i * subnetSize);
+                const range = calculateSubnetRange(baseIP, subnetCidrBits);
+                
+                resultsHTML += `
+                    <tr>
+                        <td>Subnet ${i + 1}</td>
+                        <td>${formatCIDR(baseIP, subnetCidrBits)}</td>
+                        <td>${range.network}</td>
+                        <td>${range.firstUsable}</td>
+                        <td>${range.lastUsable}</td>
+                        <td>${range.broadcast}</td>
+                        <td>${Math.pow(2, 32 - subnetCidrBits) - 2}</td>
+                    </tr>
+                `;
+            }
+
+            resultsHTML += '</table>';
+
+            // Add warning if requirements exceed AWS limits
+            if (vpcCidrBits < 16) {
+                resultsHTML += `
+                    <p style="color: red;">
+                        Warning: The required network size exceeds AWS VPC limits. 
+                        Maximum VPC size is /16.
+                    </p>
+                `;
+            }
+
+            document.getElementById('results').innerHTML = resultsHTML;
+        }
+    </script>
+</body>
+</html>
