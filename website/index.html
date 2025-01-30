@@ -1,214 +1,218 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-body {
-    background-image: url("images/dani.JPG");
-    background-repeat:no-repeat;
-    background-size:cover;
-    color : white;
-    line-height : 50%;
-    opacity: 0;
-    animation: fadeIn 1s ease-in-out forwards; 
-}
-a {
-    color:white;
-    text-decoration: none;
-}
+    <head>
+        <!-- Preload the background image -->
+        <link rel="preload" href="images/dani.JPG" as="image">
+        <style>
+            body {
+                background-color: #222; /* Fallback color */
+                background-image: url("images/dani.JPG");
+                background-repeat: no-repeat;
+                background-size: cover;
+                color: white;
+                line-height: 50%;
+                margin: 0; /* Remove default body margin */
+            }
+            .links {
+                opacity: 0; /* Start invisible */
+                background-color: rgba(86, 80, 81, 0.7);
+                font-family: monospace;
+                font-size: 16px;
+                display: inline-block;
+                padding: 15px;
+            }
+            a {
+                color: white;
+                text-decoration: none;
+            }
+            a:hover {
+                color: #ffa200;
+                text-decoration: underline;
+            }
+        </style>
+    </head>
 
-a:hover {
-    color: #ffa200; 
-    text-decoration: underline;
-}
+    <body>
+        <div class="links">
+            <p> # welcome to openmarmot.com!</p>
+            <p> # here is a curated list of interesting links - like the old internet </p>
+            <br>
+            <p> # -- My stuff -- </P>
+            <a href="https://github.com/openmarmot">my github. check out the TWE project in particular </a> <br><br>
+            <a href="./mars_lander/mars_lander.html">mars_lander.html - My Mars Lander game! </a> <br><br>
+            <a href="./space_facts.html">space_facts.html - Space Facts! </a> <br><br>
+            <a href="./ip.html">ip.html - Get your public IP address and browser user info </a> <br><br>
+            <a href="./dry_fire.html">dry_fire.html - Training aid for competitive shooting sports </a> <br><br>
+            <a href="./life.html">life.html - Visualize how many weeks you've lived, and how many you have left on average </a> <br><br>
+            <a href="./check_email.html">check_email.html Check a raw text email for useful header info </a> <br><br>
+            <a href="./aws_vpc_calc.html">aws_vpc_calc.html Calculate CIDR networks for a AWS VPC </a> <br><br>
+        
+            <p># -- Space !! --</p>
+            <a href="https://waitbutwhy.com/2014/05/fermi-paradox.html">Waibutwhy - Fermi Paradox </a> <br><br>
+            <a href="https://caseyhandmer.wordpress.com/">Casey Handmer's blog - lots of great space and future tech stuff</a> <br><br>
+            <a href="https://orbital-mechanics.space/intro.html">Orbital Mechaniccs and Astrodynamics </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=ND2TeNfcmKA">youtube - Toxic Propellant Hazards In Rocketry 1966 NASA </a> <br><br>
+            <a href="https://mainenginecutoff.com/">MECO - Space Podcast </a> <br><br>
+            <a href="https://www.youtube.com/@thespacebucket">The Space Bucket - Space Stuff </a> <br><br>
+            <a href="https://www.youtube.com/@MarcusHouse">Marcus House - Space News </a> <br><br>
+            <a href="https://x.com/spacex">X - SpaceX - watch launches here </a> <br><br>
+            <a href="https://www.swpc.noaa.gov/">NOAA Space Weather Prediction Center </a> <br><br>
+        
+            <br>
+            <p># -- Future tech+science jobs --</p>
+            <a href="https://www.spacex.com/careers/">spacex jobs! space is so crazy exciting!!</a> <br><br>
+            <a href="https://neuralink.com/careers/">Neuralink jobs ! brain computer interface</a> <br><br>
+            <a href="https://www.tesla.com/careers">Tesla jobs ! - FSD AI and Optimus are pretty interesting </a> <br><br>
+            <br>
 
-.links {
-    background-color: rgba(86, 80, 81, 0.7);
-    font-family: monospace;
-    font-size: 16px;
-    display: inline-block;
-    padding: 15px;
-}
+            <br>
+            <p># -- Job search / career stuff --</p>
+            <a href="https://www.youtube.com/@jordanhasnolife5163/playlists"> youtube - system design video playlists </a> <br><br>
+            <a href="https://neetcode.io/practice"> neetcode - neetcode programming practice </a> <br><br>
+            <a href="https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed"> hackernoon - 14 patterns to ace any coding interview question </a> <br><br>
+            <a href="https://github.com/mxssl/sre-interview-prep-guide">github - SRE Interview Prep Guide </a> <br><br>
+            <a href="https://docs.google.com/document/d/19fr_36WOzKlq_zyGP2RdxMEsdNQMZdUqn1Vahncr2pY/edit#heading=h.xg3o3psx1mah">google docs - lots of notes on how to get a job. feel like i should read this</a> <br><br>
+            <a href="https://x.com/jobs">x.com/jobs - this is new. better than linkedin i think</a> <br><br>
+            <br>
 
+            <br>
+            <p># -- AI Stuff --</p>
+            <a href="https://github.com/ggerganov/llama.cpp">llama.cpp - what i am using for running large language models </a> <br><br>
+            <br>
 
-/* Fade-in animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+            <br>
+            <p># -- Amazon AWS Stuff --</p>
+            <a href="https://github.com/SummitRoute/aws_breaking_changes">A github repo that tracks AWS breaking changes / deprecations </a> <br><br>
+            <a href="https://instances.vantage.sh/">instances.vantage.sh - Superb tool for comparing EC2 instance types </a> <br><br>
+            <a href="https://github.com/amazonlinux/amazon-linux-2023">github - Amazon Linux 2023 - Amazon's current Linux OS </a> <br><br>
+            <a href="https://github.com/aws-samples">github - AWS Samples - over 5k repos with aws sample code </a> <br><br>
+            <br>
 
-</style>
-</head>
+            <br>
+            <p># -- Ansible Stuff --</p>
+            <a href="https://github.com/ansible/ansible">Github.com - Ansible Github repo </a> <br><br>
 
-<body>
-    <div class="links">
-        <p> # welcome to openmarmot.com!</p>
-        <p> # here is a curated list of interesting links - like the old internet </p>
-        <br>
-        <p> # -- My stuff -- </P>
-        <a href="https://github.com/openmarmot">my github. check out the TWE project in particular </a> <br><br>
-        <a href="./mars_lander/mars_lander.html">mars_lander.html - My Mars Lander game! </a> <br><br>
-        <a href="./space_facts.html">space_facts.html - Space Facts! </a> <br><br>
-        <a href="./ip.html">ip.html - Get your public IP address and browser user info </a> <br><br>
-        <a href="./dry_fire.html">dry_fire.html - Training aid for competitive shooting sports </a> <br><br>
-        <a href="./life.html">life.html - Visualize how many weeks you've lived, and how many you have left on average </a> <br><br>
-        <a href="./check_email.html">check_email.html Check a raw text email for useful header info </a> <br><br>
-        <a href="./aws_vpc_calc.html">aws_vpc_calc.html Calculate CIDR networks for a AWS VPC </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- Aviation Tools --</p>
+            <a href="https://www.liveatc.net/">liveatc.net - live air traffic control radio</a> <br><br>
+            <a href="https://www.airnav.com/airports/">airnav.com - airport info  </a> <br><br>
+            <a href="https://skyvector.com/">Skyvector - Aeronautical charts  </a> <br><br>
+            
+            
+            <br>
+            <p># -- Aviation / Auto General --</p>
+            <a href="https://www.youtube.com/@damcasterspod/videos">youtube - Damcasters - aviation history podcast.</a> <br><br>
+            <a href="https://www.youtube.com/@blancolirio/videos">youtube - blancolirio - aircraft crash investigation.</a> <br><br>
+            <a href="https://www.youtube.com/@StigAviation/videos">youtube - stig aviation - aircraft maint.</a> <br><br>
+            <a href="https://www.youtube.com/@steveo1kinevo/videos">youtube - pilot - stevo1kinevo</a> <br><br>
+            <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation">FAA - Free handbooks and manuals </a> <br><br>
+            <a href="https://www.youtube.com/@GregsAirplanesandAutomobiles"> youtube - Greg's Airplanes and Automobiles</a> <br><br>
+            <a href="https://www.youtube.com/@SuperfastMatt">youtube - SuperFastMatt </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- X-plane stuff --</p>
+            <a href="https://www.youtube.com/watch?v=TlYRh4ezgHs">youtube - Everything you need to know about VORs</a> <br><br>
+            <a href="https://www.youtube.com/watch?v=7EobCaNhDCE">youtube - Cessna 172 gauge and autopilot walkthrough </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=guoO1dUIbLQ">youtube - Cessna 172 solo lesson practice  </a> <br><br>
+            <a href="https://www.x-plane.com/manuals/S-TEC_Autopilot_Manual.pdf">S-TEC Autopilot Manual  </a> <br><br>
+            
+            <br>
+
+            <br>
+            <p># -- Linux ! --</p>
+            <a href="https://sysprog21.github.io/lkmpg/"> the linux kernel module programming guide (2024) </a> <br><br>
+            <a href="https://lwn.net/"> lwn.net - Linux Weekly News</a> <br><br>
+            <a href="https://www.phoronix.com/"> phoronix.com - Linux/Open Source News site</a> <br><br>
+            <br>
+
+            <br>
+            <p># -- Medical  --</p>
+            <a href="https://www.youtube.com/watch?v=AU0__7UWB5E">youtube - Dark Angel Medical - Stop the Bleed Training  </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- Networking --</p>
+            <a href="https://www.youtube.com/@RobRikerTechChannel/videos"> youtube - Rob Riker's Cisco Networking channel </a> <br><br>
+            <br>
+            
+            <br>
+            <p># -- Python --</p>
+            <a href="https://pypi.org/">pypi - the python package repository </a> <br><br>
+            <a href="https://www.fullstackpython.com/">full stack python </a> <br><br>
+            <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">flask mega tutorial </a> <br><br>
+            <a href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">github - Kalman and Bayesian Filters in Python  </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- Javascript --</p>
+            <a href="https://www.npmjs.com">npm - javascript package manager</a> <br><br>
+
+            <br>
+
+            <br>
+            <p># -- Solar ! --</p>
+            <a href="https://www.youtube.com/watch?v=l2JOUCo7iaM">youtube - solar powered minisplit heat/cool </a> <br><br>
+            <a href="https://www.youtube.com/@solarcannonballrun/videos">youtube - Solar powered Tesla Cannonball Run  </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=OZvrTuhJhXs">youtube - solar panel connection how to </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- Online Learning --</p>
+            <a href="https://ocw.mit.edu/">MIT open courseware </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- chart / Diagram Tools --</p>
+            <a href="https://draw.io/">draw.io - great for making cloud architecture diagrams </a> <br><br>
+            <a href="https://sankeymatic.com/">sankeymatic.com - make your own Sankey diagrams </a> <br><br>
+            <br>
+            
+            <br>
+            <p># -- World Economy --</p>
+            <a href="https://www.youtube.com/@wgowshipping/videos">youtube - what is going on with shipping? </a> <br><br>
+            <br>
+
+            <br>
+            <p># -- Relax / Entertainment / Discussion --</p>
+            <a href="https://twitter.com/1stPrinciplesFM">x - 1stprinciplesFM </a> <br><br>
+            <a href="https://x.com/BG2Pod">x - the bg2 podcast </a> <br><br>
+            <a href="https://www.twitch.tv/robbaz">twitch - robbaz - The OG streamer</a> <br><br>
+            <br>
+            
+            <br>
+            <p># -- Stuff i am into at the moment -- </p>
+            
+            <a href="https://www.youtube.com/@peterigas2494/videos">youtube - Pete Rigas - discussion on STEM topics </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=d-rnG0DkcdU&list=PLvqAPehesuaPRHPOkY3Zbc5Uyy0ND9Ckz">youtube - Close Combat Crosses of Iron - German campaign </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=mWA83WchOys">youtube - America's Oldest Freight Cars </a> <br><br>
+            <a href="https://www.eaa.org/eaa/aircraft-building/eaa-sportair-workshops/eaa-sportair-workshop-schedule">EAA Airplane building workshops </a> <br><br>
+            <a href="https://time.gov/">time.gov - absolute best US time zone website ever </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=0x-gm-kBiZs">youtube - German WW2 era Z series computers </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=-xU3o83ddi8">youtube - WW2 German Field Radio in use - very neat!  </a> <br><br>
+            <a href="https://www.youtube.com/watch?v=IXBC85SGC0Q">linux kernel dev writes usb driver </a> <br><br>
+            <a href="https://content.neuralink.com/compression-challenge/README.html">Neuralink compression challenge </a> <br><br>
+        
+            <br><br>
+            <p> # Have a great day! </p>
+        </div>
+
+        <!-- JavaScript to handle loading -->
+        <script>
+            //basically a hack to check when the image is in the browser cache
+            const img = new Image();
+            img.src = 'images/dani.JPG';
+            
+            img.onload = function() {
+                // Make content visible immediately when image loads
+                document.querySelector('.links').style.opacity = '1';
+            };
     
-        <p># -- Space !! --</p>
-        <a href="https://waitbutwhy.com/2014/05/fermi-paradox.html">Waibutwhy - Fermi Paradox </a> <br><br>
-        <a href="https://caseyhandmer.wordpress.com/">Casey Handmer's blog - lots of great space and future tech stuff</a> <br><br>
-        <a href="https://orbital-mechanics.space/intro.html">Orbital Mechaniccs and Astrodynamics </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=ND2TeNfcmKA">youtube - Toxic Propellant Hazards In Rocketry 1966 NASA </a> <br><br>
-        <a href="https://mainenginecutoff.com/">MECO - Space Podcast </a> <br><br>
-        <a href="https://www.youtube.com/@thespacebucket">The Space Bucket - Space Stuff </a> <br><br>
-        <a href="https://www.youtube.com/@MarcusHouse">Marcus House - Space News </a> <br><br>
-        <a href="https://x.com/spacex">X - SpaceX - watch launches here </a> <br><br>
-        <a href="https://www.swpc.noaa.gov/">NOAA Space Weather Prediction Center </a> <br><br>
-    
-        <br>
-        <p># -- Future tech+science jobs --</p>
-        <a href="https://www.spacex.com/careers/">spacex jobs! space is so crazy exciting!!</a> <br><br>
-        <a href="https://neuralink.com/careers/">Neuralink jobs ! brain computer interface</a> <br><br>
-        <a href="https://www.tesla.com/careers">Tesla jobs ! - FSD AI and Optimus are pretty interesting </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Job search / career stuff --</p>
-        <a href="https://www.youtube.com/@jordanhasnolife5163/playlists"> youtube - system design video playlists </a> <br><br>
-        <a href="https://neetcode.io/practice"> neetcode - neetcode programming practice </a> <br><br>
-        <a href="https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed"> hackernoon - 14 patterns to ace any coding interview question </a> <br><br>
-        <a href="https://github.com/mxssl/sre-interview-prep-guide">github - SRE Interview Prep Guide </a> <br><br>
-        <a href="https://docs.google.com/document/d/19fr_36WOzKlq_zyGP2RdxMEsdNQMZdUqn1Vahncr2pY/edit#heading=h.xg3o3psx1mah">google docs - lots of notes on how to get a job. feel like i should read this</a> <br><br>
-        <a href="https://x.com/jobs">x.com/jobs - this is new. better than linkedin i think</a> <br><br>
-        <br>
-
-        <br>
-        <p># -- AI Stuff --</p>
-        <a href="https://github.com/ggerganov/llama.cpp">llama.cpp - what i am using for running large language models </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Amazon AWS Stuff --</p>
-        <a href="https://github.com/SummitRoute/aws_breaking_changes">A github repo that tracks AWS breaking changes / deprecations </a> <br><br>
-        <a href="https://instances.vantage.sh/">instances.vantage.sh - Superb tool for comparing EC2 instance types </a> <br><br>
-        <a href="https://github.com/amazonlinux/amazon-linux-2023">github - Amazon Linux 2023 - Amazon's current Linux OS </a> <br><br>
-        <a href="https://github.com/aws-samples">github - AWS Samples - over 5k repos with aws sample code </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Ansible Stuff --</p>
-        <a href="https://github.com/ansible/ansible">Github.com - Ansible Github repo </a> <br><br>
-
-        <br>
-
-        <br>
-        <p># -- Aviation Tools --</p>
-        <a href="https://www.liveatc.net/">liveatc.net - live air traffic control radio</a> <br><br>
-        <a href="https://www.airnav.com/airports/">airnav.com - airport info  </a> <br><br>
-        <a href="https://skyvector.com/">Skyvector - Aeronautical charts  </a> <br><br>
+            // Handle cached images
+            if (img.complete) img.onload();
+        </script>
         
-        
-        <br>
-        <p># -- Aviation / Auto General --</p>
-        <a href="https://www.youtube.com/@damcasterspod/videos">youtube - Damcasters - aviation history podcast.</a> <br><br>
-        <a href="https://www.youtube.com/@blancolirio/videos">youtube - blancolirio - aircraft crash investigation.</a> <br><br>
-        <a href="https://www.youtube.com/@StigAviation/videos">youtube - stig aviation - aircraft maint.</a> <br><br>
-        <a href="https://www.youtube.com/@steveo1kinevo/videos">youtube - pilot - stevo1kinevo</a> <br><br>
-        <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation">FAA - Free handbooks and manuals </a> <br><br>
-        <a href="https://www.youtube.com/@GregsAirplanesandAutomobiles"> youtube - Greg's Airplanes and Automobiles</a> <br><br>
-        <a href="https://www.youtube.com/@SuperfastMatt">youtube - SuperFastMatt </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- X-plane stuff --</p>
-        <a href="https://www.youtube.com/watch?v=TlYRh4ezgHs">youtube - Everything you need to know about VORs</a> <br><br>
-        <a href="https://www.youtube.com/watch?v=7EobCaNhDCE">youtube - Cessna 172 gauge and autopilot walkthrough </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=guoO1dUIbLQ">youtube - Cessna 172 solo lesson practice  </a> <br><br>
-        <a href="https://www.x-plane.com/manuals/S-TEC_Autopilot_Manual.pdf">S-TEC Autopilot Manual  </a> <br><br>
-        
-        <br>
-
-        <br>
-        <p># -- Linux ! --</p>
-        <a href="https://sysprog21.github.io/lkmpg/"> the linux kernel module programming guide (2024) </a> <br><br>
-        <a href="https://lwn.net/"> lwn.net - Linux Weekly News</a> <br><br>
-        <a href="https://www.phoronix.com/"> phoronix.com - Linux/Open Source News site</a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Medical  --</p>
-        <a href="https://www.youtube.com/watch?v=AU0__7UWB5E">youtube - Dark Angel Medical - Stop the Bleed Training  </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Networking --</p>
-        <a href="https://www.youtube.com/@RobRikerTechChannel/videos"> youtube - Rob Riker's Cisco Networking channel </a> <br><br>
-        <br>
-        
-        <br>
-        <p># -- Python --</p>
-        <a href="https://pypi.org/">pypi - the python package repository </a> <br><br>
-        <a href="https://www.fullstackpython.com/">full stack python </a> <br><br>
-        <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">flask mega tutorial </a> <br><br>
-        <a href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">github - Kalman and Bayesian Filters in Python  </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Javascript --</p>
-        <a href="https://www.npmjs.com">npm - javascript package manager</a> <br><br>
-
-        <br>
-
-        <br>
-        <p># -- Solar ! --</p>
-        <a href="https://www.youtube.com/watch?v=l2JOUCo7iaM">youtube - solar powered minisplit heat/cool </a> <br><br>
-        <a href="https://www.youtube.com/@solarcannonballrun/videos">youtube - Solar powered Tesla Cannonball Run  </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=OZvrTuhJhXs">youtube - solar panel connection how to </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Online Learning --</p>
-        <a href="https://ocw.mit.edu/">MIT open courseware </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- chart / Diagram Tools --</p>
-        <a href="https://draw.io/">draw.io - great for making cloud architecture diagrams </a> <br><br>
-        <a href="https://sankeymatic.com/">sankeymatic.com - make your own Sankey diagrams </a> <br><br>
-        <br>
-        
-        <br>
-        <p># -- World Economy --</p>
-        <a href="https://www.youtube.com/@wgowshipping/videos">youtube - what is going on with shipping? </a> <br><br>
-        <br>
-
-        <br>
-        <p># -- Relax / Entertainment / Discussion --</p>
-        <a href="https://twitter.com/1stPrinciplesFM">x - 1stprinciplesFM </a> <br><br>
-        <a href="https://x.com/BG2Pod">x - the bg2 podcast </a> <br><br>
-        <a href="https://www.twitch.tv/robbaz">twitch - robbaz - The OG streamer</a> <br><br>
-        <br>
-        
-        <br>
-        <p># -- Stuff i am into at the moment -- </p>
-        <a href="https://www.youtube.com/playlist?list=PLgpPFHOqOqscj3ytr4BE5JJSUMIG781B2">youtube - Solargene Campaign playthrough </a> <br><br>
-        <a href="https://www.youtube.com/@peterigas2494/videos">youtube - Pete Rigas - discussion on STEM topics </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=d-rnG0DkcdU&list=PLvqAPehesuaPRHPOkY3Zbc5Uyy0ND9Ckz">youtube - Close Combat Crosses of Iron - German campaign </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=2oGLlG3Whfk">youtube - Ranking all 108 GNU/Linux Coreutils commands </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=mWA83WchOys">youtube - America's Oldest Freight Cars </a> <br><br>
-        <a href="https://www.eaa.org/eaa/aircraft-building/eaa-sportair-workshops/eaa-sportair-workshop-schedule">EAA Airplane building workshops </a> <br><br>
-        <a href="https://tahnok.github.io/colmi_r02_client/colmi_r02_client.html">github - python client for a inexpensive smart ring </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=GG7M-BtsHdo">youtube - Chuck Cook Sept 2024 - FSD 12.5.4 covers auto-park and the new smart summon. </a> <br><br>
-        <a href="https://time.gov/">time.gov - absolute best US time zone website ever </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=0x-gm-kBiZs">youtube - German WW2 era Z series computers </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=-xU3o83ddi8">youtube - WW2 German Field Radio in use - very neat!  </a> <br><br>
-        <a href="https://www.plasticlist.org/">plasticlist.org - investigating plastics in food  </a> <br><br>
-        <a href="https://www.youtube.com/watch?v=IXBC85SGC0Q">linux kernel dev writes usb driver </a> <br><br>
-        <a href="https://content.neuralink.com/compression-challenge/README.html">Neuralink compression challenge </a> <br><br>
-        <a href="https://www.youtube.com/@JoeTegtmeyer/videos">youtube - JoeTegtmeyer - Giga Texas fly over updates </a> <br><br>
-      
-        <br><br>
-        <p> # Have a great day! </p>
-    </div>
-</body>
+    </body>
 </html>
