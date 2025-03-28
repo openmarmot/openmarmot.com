@@ -29,11 +29,20 @@
                 color: #ffa200;
                 text-decoration: underline;
             }
+            #status {
+                font-size: 24px;
+                margin-bottom: 20px;
+                text-align: center;
+                width: 100%; /* Matches parent width */
+                position: relative; /* Ensures it respects its container */
+            }
+            .open { color: rgb(101, 243, 101); }
+            .closed { color: red; }
         </style>
     </head>
-
     <body>
         <div class="links">
+            <div id="status"></div> <!-- Stock market status inside links div -->
             <p> # welcome to openmarmot.com!</p>
             <p> # here is a curated list of interesting links - like the old internet </p>
             <br>
@@ -49,6 +58,7 @@
             <a href="./token_estimator.html">token_estimator.html - Get a rough estimate of the token count (use for LLM stuff) </a> <br><br>
         
             <p># -- Space !! --</p>
+            <a href="https://iss-sim.spacex.com/">SpaceX ISS Docking Sim </a> <br><br>
             <a href="https://waitbutwhy.com/2014/05/fermi-paradox.html">Waibutwhy - Fermi Paradox </a> <br><br>
             <a href="https://caseyhandmer.wordpress.com/">Casey Handmer's blog - lots of great space and future tech stuff</a> <br><br>
             <a href="https://orbital-mechanics.space/intro.html">Orbital Mechaniccs and Astrodynamics </a> <br><br>
@@ -64,7 +74,7 @@
             <a href="https://neuralink.com/careers/">Neuralink jobs ! brain computer interface</a> <br><br>
             <a href="https://www.tesla.com/careers">Tesla jobs ! - FSD AI and Optimus are pretty interesting </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Job search / career stuff --</p>
             <a href="https://www.youtube.com/@jordanhasnolife5163/playlists"> youtube - system design video playlists </a> <br><br>
@@ -74,16 +84,16 @@
             <a href="https://docs.google.com/document/d/19fr_36WOzKlq_zyGP2RdxMEsdNQMZdUqn1Vahncr2pY/edit#heading=h.xg3o3psx1mah">google docs - lots of notes on how to get a job. feel like i should read this</a> <br><br>
             <a href="https://x.com/jobs">x.com/jobs - this is new. better than linkedin i think</a> <br><br>
             <br>
-
+    
             <br>
             <p># -- AI / Local LLM Inference / AI+Coding Stuff --</p>
             <a href="https://ai-timeline.org/">ai-timeline.org - timeline of significant AI events  </a> <br><br>
             <a href="https://github.com/All-Hands-AI/OpenHands">github - openhands  </a> <br><br>
             <a href="https://github.com/huggingface/smolagents/tree/main">github - Huggingface smolagents  </a> <br><br>
             <a href="https://github.com/ggerganov/llama.cpp">llama.cpp - what i am using for running large language models </a> <br><br>
-
+    
             <br>
-
+    
             <br>
             <p># -- Amazon AWS Stuff --</p>
             <a href="https://aws.amazon.com/new">AWS News Feed </a> <br><br>
@@ -92,24 +102,23 @@
             <a href="https://github.com/amazonlinux/amazon-linux-2023">github - Amazon Linux 2023 - Amazon's current Linux OS </a> <br><br>
             <a href="https://github.com/aws-samples">github - AWS Samples - over 5k repos with aws sample code </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Microsoft Azure Stuff Stuff --</p>
             <a href="https://learn.microsoft.com/en-us/python/api/overview/azure/mgmt-network-readme?view=azure-python">Azure Python SDK </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Ansible Stuff --</p>
             <a href="https://github.com/ansible/ansible">Github.com - Ansible Github repo </a> <br><br>
-
+    
             <br>
-
+    
             <br>
             <p># -- Aviation Tools --</p>
             <a href="https://www.liveatc.net/">liveatc.net - live air traffic control radio</a> <br><br>
             <a href="https://www.airnav.com/airports/">airnav.com - airport info  </a> <br><br>
             <a href="https://skyvector.com/">Skyvector - Aeronautical charts  </a> <br><br>
-            
             
             <br>
             <p># -- Aviation / Auto General --</p>
@@ -120,7 +129,7 @@
             <a href="https://www.youtube.com/@GregsAirplanesandAutomobiles"> youtube - Greg's Airplanes and Automobiles</a> <br><br>
             <a href="https://www.youtube.com/@SuperfastMatt">youtube - SuperFastMatt </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- X-plane stuff --</p>
             <a href="https://www.youtube.com/watch?v=TlYRh4ezgHs">youtube - Everything you need to know about VORs</a> <br><br>
@@ -129,19 +138,19 @@
             <a href="https://www.x-plane.com/manuals/S-TEC_Autopilot_Manual.pdf">S-TEC Autopilot Manual  </a> <br><br>
             
             <br>
-
+    
             <br>
             <p># -- Linux ! --</p>
             <a href="https://sysprog21.github.io/lkmpg/"> the linux kernel module programming guide (2024) </a> <br><br>
             <a href="https://lwn.net/"> lwn.net - Linux Weekly News</a> <br><br>
             <a href="https://www.phoronix.com/"> phoronix.com - Linux/Open Source News site</a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Medical  --</p>
             <a href="https://www.youtube.com/watch?v=AU0__7UWB5E">youtube - Dark Angel Medical - Stop the Bleed Training  </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Networking --</p>
             <a href="https://www.youtube.com/@RobRikerTechChannel/videos"> youtube - Rob Riker's Cisco Networking channel </a> <br><br>
@@ -154,25 +163,25 @@
             <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">flask mega tutorial </a> <br><br>
             <a href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">github - Kalman and Bayesian Filters in Python  </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Javascript --</p>
             <a href="https://www.npmjs.com">npm - javascript package manager</a> <br><br>
-
+    
             <br>
-
+    
             <br>
             <p># -- Solar ! --</p>
             <a href="https://www.youtube.com/watch?v=l2JOUCo7iaM">youtube - solar powered minisplit heat/cool </a> <br><br>
             <a href="https://www.youtube.com/@solarcannonballrun/videos">youtube - Solar powered Tesla Cannonball Run  </a> <br><br>
             <a href="https://www.youtube.com/watch?v=OZvrTuhJhXs">youtube - solar panel connection how to </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Online Learning --</p>
             <a href="https://ocw.mit.edu/">MIT open courseware </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- chart / Diagram Tools --</p>
             <a href="https://draw.io/">draw.io - great for making cloud architecture diagrams </a> <br><br>
@@ -183,7 +192,7 @@
             <p># -- World Economy --</p>
             <a href="https://www.youtube.com/@wgowshipping/videos">youtube - what is going on with shipping? </a> <br><br>
             <br>
-
+    
             <br>
             <p># -- Relax / Entertainment / Discussion --</p>
             <a href="https://www.youtube.com/@geohotarchive">youtube - george hotz stream archive </a> <br><br>
@@ -211,7 +220,7 @@
             <br><br>
             <p> # Have a great day! </p>
         </div>
-
+    
         <!-- JavaScript to handle loading -->
         <script>
             //basically a hack to check when the image is in the browser cache
@@ -227,5 +236,74 @@
             if (img.complete) img.onload();
         </script>
         
+        <!-- JavaScript for stock market thingy -->
+        <script>
+            function getEasternTime() {
+                const now = new Date();
+                const options = { timeZone: 'America/New_York', hour12: false };
+                const [date, time] = now.toLocaleString('en-US', options).split(', ');
+                const [month, day, year] = date.split('/').map(Number);
+                const [hours, minutes, seconds] = time.split(':').map(Number);
+                return new Date(year, month - 1, day, hours, minutes, seconds);
+            }
+    
+            function updateMarketStatus() {
+                const now = getEasternTime();
+                const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const totalMinutes = hours * 60 + minutes;
+    
+                const openTime = 9 * 60 + 30; // 9:30 AM ET
+                const closeTime = 16 * 60;     // 4:00 PM ET
+                const statusDiv = document.getElementById('status');
+    
+                // Check if it's a weekday
+                if (day === 0 || day === 6) {
+                    // Weekend: Market is closed
+                    const nextMonday = new Date(now);
+                    nextMonday.setDate(now.getDate() + ((8 - day) % 7));
+                    nextMonday.setHours(9, 30, 0, 0);
+                    const timeUntilOpen = nextMonday - now;
+                    const hoursLeft = Math.floor(timeUntilOpen / (1000 * 60 * 60));
+                    const minutesLeft = Math.floor((timeUntilOpen % (1000 * 60 * 60)) / (1000 * 60));
+                    statusDiv.textContent = `Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
+                    statusDiv.className = 'closed';
+                } else {
+                    // Weekday: Check time
+                    if (totalMinutes < openTime) {
+                        // Before opening
+                        const timeUntilOpen = (openTime - totalMinutes) * 60 * 1000;
+                        const hoursLeft = Math.floor(timeUntilOpen / (1000 * 60 * 60));
+                        const minutesLeft = Math.floor((timeUntilOpen % (1000 * 60 * 60)) / (1000 * 60));
+                        statusDiv.textContent = `Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
+                        statusDiv.className = 'closed';
+                    } else if (totalMinutes >= closeTime) {
+                        // After closing
+                        const nextOpen = new Date(now);
+                        nextOpen.setDate(now.getDate() + 1);
+                        nextOpen.setHours(9, 30, 0, 0);
+                        if (nextOpen.getDay() === 0) nextOpen.setDate(nextOpen.getDate() + 1); // Skip Sunday
+                        if (nextOpen.getDay() === 6) nextOpen.setDate(nextOpen.getDate() + 2); // Skip Saturday
+                        const timeUntilOpen = nextOpen - now;
+                        const hoursLeft = Math.floor(timeUntilOpen / (1000 * 60 * 60));
+                        const minutesLeft = Math.floor((timeUntilOpen % (1000 * 60 * 60)) / (1000 * 60));
+                        statusDiv.textContent = `Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
+                        statusDiv.className = 'closed';
+                    } else {
+                        // Market is open
+                        const timeUntilClose = (closeTime - totalMinutes) * 60 * 1000;
+                        const hoursLeft = Math.floor(timeUntilClose / (1000 * 60 * 60));
+                        const minutesLeft = Math.floor((timeUntilClose % (1000 * 60 * 60)) / (1000 * 60));
+                        statusDiv.textContent = `Stock Market Open - Closes in ${hoursLeft}h ${minutesLeft}m`;
+                        statusDiv.className = 'open';
+                    }
+                }
+            }
+    
+            // Update immediately and then every minute
+            updateMarketStatus();
+            setInterval(updateMarketStatus, 60000);
+        </script>
     </body>
-</html>
+    </html>
