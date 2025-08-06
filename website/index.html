@@ -87,12 +87,11 @@
     
             <br>
             <p># -- Job search / career stuff --</p>
+            <a href="https://hiring.cafe/"> hiring.cafe - job search website </a> <br><br>
             <a href="https://www.youtube.com/@jordanhasnolife5163/playlists"> youtube - system design video playlists </a> <br><br>
             <a href="https://neetcode.io/practice"> neetcode - neetcode programming practice </a> <br><br>
             <a href="https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed"> hackernoon - 14 patterns to ace any coding interview question </a> <br><br>
             <a href="https://github.com/mxssl/sre-interview-prep-guide">github - SRE Interview Prep Guide </a> <br><br>
-            <a href="https://docs.google.com/document/d/19fr_36WOzKlq_zyGP2RdxMEsdNQMZdUqn1Vahncr2pY/edit#heading=h.xg3o3psx1mah">google docs - lots of notes on how to get a job. feel like i should read this</a> <br><br>
-            <a href="https://x.com/jobs">x.com/jobs - this is new. better than linkedin i think</a> <br><br>
             <br>
     
             <br>
@@ -203,21 +202,16 @@
             <br>
     
             <br>
-            <p># -- Relax / Entertainment / Discussion --</p>
+            <p># -- Relax / Entertainment / Discussion / News --</p>
             <a href="https://www.youtube.com/watch?v=SC_y0C6t8H4">youtube - Agenda-Free TV (news) </a> <br><br>
             <a href="https://www.youtube.com/@BenStoeger187/videos">youtube - Ben Stoeger </a> <br><br>
             <a href="https://www.youtube.com/@geohotarchive">youtube - george hotz stream archive </a> <br><br>
-            <a href="https://twitter.com/1stPrinciplesFM">x - 1stprinciplesFM </a> <br><br>
-            <a href="https://x.com/BG2Pod">x - the bg2 podcast </a> <br><br>
             <a href="https://www.twitch.tv/robbaz">twitch - robbaz - The OG streamer</a> <br><br>
             <br>
             
             <br>
             <p># -- Stuff i am into at the moment -- </p>
             <a href="https://www.youtube.com/watch?v=lf5qf6vl1bk">youtube - defiant gatekeeper : surviving 6 years in investment banking </a> <br><br>
-            <a href="https://www.youtube.com/watch?v=0x-gm-kBiZs">youtube - German WW2 era Z series computers </a> <br><br>
-            <a href="https://www.youtube.com/watch?v=-xU3o83ddi8">youtube - WW2 German Field Radio in use - very neat!  </a> <br><br>
-            <a href="https://content.neuralink.com/compression-challenge/README.html">Neuralink compression challenge </a> <br><br>
         
             <br><br>
             <p> # Have a great day! </p>
@@ -269,7 +263,7 @@
                     const timeUntilOpen = nextMonday - now;
                     const hoursLeft = Math.floor(timeUntilOpen / (1000 * 60 * 60));
                     const minutesLeft = Math.floor((timeUntilOpen % (1000 * 60 * 60)) / (1000 * 60));
-                    statusDiv.textContent = `Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
+                    statusDiv.textContent = `US Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
                     statusDiv.className = 'closed';
                 } else {
                     // Weekday: Check time
@@ -278,7 +272,7 @@
                         const timeUntilOpen = (openTime - totalMinutes) * 60 * 1000;
                         const hoursLeft = Math.floor(timeUntilOpen / (1000 * 60 * 60));
                         const minutesLeft = Math.floor((timeUntilOpen % (1000 * 60 * 60)) / (1000 * 60));
-                        statusDiv.textContent = `Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
+                        statusDiv.textContent = `US Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
                         statusDiv.className = 'closed';
                     } else if (totalMinutes >= closeTime) {
                         // After closing
@@ -290,14 +284,14 @@
                         const timeUntilOpen = nextOpen - now;
                         const hoursLeft = Math.floor(timeUntilOpen / (1000 * 60 * 60));
                         const minutesLeft = Math.floor((timeUntilOpen % (1000 * 60 * 60)) / (1000 * 60));
-                        statusDiv.textContent = `Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
+                        statusDiv.textContent = `US Stock Market Closed - Opens in ${hoursLeft}h ${minutesLeft}m`;
                         statusDiv.className = 'closed';
                     } else {
                         // Market is open
                         const timeUntilClose = (closeTime - totalMinutes) * 60 * 1000;
                         const hoursLeft = Math.floor(timeUntilClose / (1000 * 60 * 60));
                         const minutesLeft = Math.floor((timeUntilClose % (1000 * 60 * 60)) / (1000 * 60));
-                        statusDiv.textContent = `Stock Market Open - Closes in ${hoursLeft}h ${minutesLeft}m`;
+                        statusDiv.textContent = `US Stock Market Open - Closes in ${hoursLeft}h ${minutesLeft}m`;
                         statusDiv.className = 'open';
                     }
                 }
