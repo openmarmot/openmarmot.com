@@ -7,17 +7,18 @@
             body {
                 background-color: #222; /* Fallback color */
                 background-image: url("images/dani.JPG");
-                background-repeat: no-repeat;
-                background-size: cover;
+                background-repeat: repeat; /* Changed to tile the image */
+                background-size: contain; /* Kept to avoid stretching */
+                background-position: center; /* Center the image */
                 color: white;
-                line-height: 50%;
+                line-height: 80%; /* Adjusted for better readability */
                 margin: 0; /* Remove default body margin */
             }
             .links {
                 opacity: 0; /* Start invisible */
                 background-color: rgba(86, 80, 81, 0.7);
                 font-family: monospace;
-                font-size: 16px;
+                font-size: 14px;
                 display: inline-block;
                 padding: 15px;
             }
@@ -38,15 +39,58 @@
             }
             .open { color: rgb(101, 243, 101); }
             .closed { color: red; }
+            #toc {
+                margin-bottom: 20px;
+            }
+            #toc ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+            #toc li {
+                margin-bottom: 5px;
+            }
         </style>
     </head>
     <body>
         <div class="links">
             <div id="status"></div> <!-- Stock market status inside links div -->
+            
             <p> # welcome to openmarmot.com!</p>
             <p> # a curated list of interesting links - like a old geocities page </p>
+
+            <!-- Table of Contents -->
+            <div id="toc">
+                <p># Table of Contents</p>
+                <ul>
+                    <li><a href="#my-stuff">My stuff</a></li>
+                    <li><a href="#stuff-i-am-into-at-the-moment">Stuff i am into at the moment</a></li>
+                    <li><a href="#ai-local-llm-inference-ai-coding-stuff">AI / Local LLM Inference / AI+Coding Stuff</a></li>
+                    <li><a href="#amazon-aws-stuff">Amazon AWS Stuff</a></li>
+                    <li><a href="#ansible-stuff">Ansible Stuff</a></li>
+                    <li><a href="#aviation-auto-general">Aviation / Auto General</a></li>
+                    <li><a href="#aviation-tools">Aviation Tools</a></li>
+                    <li><a href="#best-government-website">Best Government Website</a></li>
+                    <li><a href="#chart-diagram-tools">chart / Diagram Tools</a></li>
+                    <li><a href="#future-tech-science-jobs">Future tech+science jobs</a></li>
+                    <li><a href="#go-golang">Go / Golang</a></li>
+                    <li><a href="#javascript">Javascript</a></li>
+                    <li><a href="#job-search-career-stuff">Job search / career stuff</a></li>
+                    <li><a href="#linux">Linux !</a></li>
+                    <li><a href="#medical">Medical</a></li>
+                    <li><a href="#microsoft-azure-stuff">Microsoft Azure Stuff</a></li>
+                    <li><a href="#networking">Networking</a></li>
+                    <li><a href="#online-learning">Online Learning</a></li>
+                    <li><a href="#python">Python</a></li>
+                    <li><a href="#relax-entertainment-discussion-news">Relax / Entertainment / Discussion / News</a></li>
+                    <li><a href="#solar">Solar !</a></li>
+                    <li><a href="#space">Space !!</a></li>
+                    <li><a href="#world-economy">World Economy</a></li>
+                    <li><a href="#x-plane-stuff">X-plane stuff</a></li>
+                </ul>
+            </div>
+            
             <br>
-            <p> # -- My stuff -- </P>
+            <p id="my-stuff"> # -- My stuff -- </p>
             <a href="https://github.com/openmarmot">my github. check out the TWE project in particular </a> <br><br>
             <a href="./mars_lander/mars_lander.html">mars_lander.html - My Mars Lander game! </a> <br><br>
             <a href="./space_facts.html">space_facts.html - Space Facts! </a> <br><br>
@@ -58,16 +102,13 @@
             <a href="./token_estimator.html">token_estimator.html - Get a rough estimate of the token count (use for LLM stuff) </a> <br><br>
 
             <br>
-            <p># -- Stuff i am into at the moment -- </p>
-            <a href="https://omarchy.org/">omarchy.org - Arch based Linux Distro by DHH </a> <br><br>
+            <p id="stuff-i-am-into-at-the-moment"># -- Stuff i am into at the moment -- </p>
             <a href="https://github.com/KittenML/KittenTTS">github - Kitten Text to Speech </a> <br><br>
             <a href="https://docs.unsloth.ai/basics/gpt-oss-how-to-run-and-fine-tune">unsloth - unsloth docs page on gpt-oss </a> <br><br>
             <a href="https://www.youtube.com/watch?v=lf5qf6vl1bk">youtube - defiant gatekeeper : surviving 6 years in investment banking </a> <br><br>
             <br>
         
-            
-            
-            <p># -- AI / Local LLM Inference / AI+Coding Stuff --</p>
+            <p id="ai-local-llm-inference-ai-coding-stuff"># -- AI / Local LLM Inference / AI+Coding Stuff --</p>
             <a href="https://ai-timeline.org/">ai-timeline.org - timeline of significant AI events  </a> <br><br>
             <a href="https://github.com/tinygrad/tinygrad">github - tinygrad - george hotz ai/ml framework </a> <br><br>
             <a href="https://github.com/All-Hands-AI/OpenHands">github - openhands  </a> <br><br>
@@ -75,7 +116,7 @@
             <a href="https://github.com/ggerganov/llama.cpp">github - llama.cpp - what i am using for running large language models </a> <br><br>
 
             <br>
-            <p># -- Amazon AWS Stuff --</p>
+            <p id="amazon-aws-stuff"># -- Amazon AWS Stuff --</p>
             <a href="https://aws.amazon.com/new">AWS News Feed </a> <br><br>
             <a href="https://region-comparison.aws.com">AWS Cloudformation Spec Comparison between regions </a> <br><br>
             <a href="https://github.com/SummitRoute/aws_breaking_changes">A github repo that tracks AWS breaking changes / deprecations </a> <br><br>
@@ -87,14 +128,12 @@
             <br>
 
             <br>
-            <p># -- Ansible Stuff --</p>
+            <p id="ansible-stuff"># -- Ansible Stuff --</p>
             <a href="https://github.com/ansible/ansible">Github.com - Ansible Github repo </a> <br><br>
             <a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html">docs.ansible.com - AWS Ansible collection </a> <br><br>
     
             <br>
-
-            <br>
-            <p># -- Aviation / Auto General --</p>
+            <p id="aviation-auto-general"># -- Aviation / Auto General --</p>
             <a href="https://www.youtube.com/@therealjimmysworld">youtube - Jimmys World - buying and restoring airplanes.</a> <br><br>
             <a href="https://www.youtube.com/@damcasterspod/videos">youtube - Damcasters - aviation history podcast.</a> <br><br>
             <a href="https://www.youtube.com/@StigAviation/videos">youtube - stig aviation - aircraft maint.</a> <br><br>
@@ -105,45 +144,40 @@
             <br>
 
             <br>
-            <p># -- Aviation Tools --</p>
+            <p id="aviation-tools"># -- Aviation Tools --</p>
             <a href="https://www.liveatc.net/">liveatc.net - live air traffic control radio</a> <br><br>
             <a href="https://www.airnav.com/airports/">airnav.com - airport info  </a> <br><br>
             <a href="https://skyvector.com/">Skyvector - Aeronautical charts  </a> <br><br>
             <br>
 
             <br>
-            <p># -- Best Government Website --</p>
+            <p id="best-government-website"># -- Best Government Website --</p>
             <a href="https://time.gov/">time.gov - absolute best US time zone website ever </a> <br><br>
             <br>
 
             <br>
-            <p># -- chart / Diagram Tools --</p>
+            <p id="chart-diagram-tools"># -- chart / Diagram Tools --</p>
             <a href="https://draw.io/">draw.io - great for making cloud architecture diagrams </a> <br><br>
             <a href="https://sankeymatic.com/">sankeymatic.com - make your own Sankey diagrams </a> <br><br>
             <br>
     
             <br>
-            <br>
-            <p># -- Future tech+science jobs --</p>
+            <p id="future-tech-science-jobs"># -- Future tech+science jobs --</p>
             <a href="https://www.spacex.com/careers/">spacex jobs</a> <br><br>
             <a href="https://neuralink.com/careers/">Neuralink jobs </a> <br><br>
             <a href="https://www.tesla.com/careers">Tesla jobs  </a> <br><br>
             <br>
 
             <br>
-            <p># -- Go / Golang --</p>
+            <p id="go-golang"># -- Go / Golang --</p>
             <a href="https://google.github.io/styleguide/go/guide">Go style guide </a> <br><br>
     
             <br>
-
-            <br>
-            <p># -- Javascript --</p>
+            <p id="javascript"># -- Javascript --</p>
             <a href="https://www.npmjs.com">npm - javascript package manager</a> <br><br>
     
             <br>
-    
-            <br>
-            <p># -- Job search / career stuff --</p>
+            <p id="job-search-career-stuff"># -- Job search / career stuff --</p>
             <a href="https://hiring.cafe/"> hiring.cafe - job search website </a> <br><br>
             <a href="https://www.youtube.com/@jordanhasnolife5163/playlists"> youtube - system design video playlists </a> <br><br>
             <a href="https://neetcode.io/practice"> neetcode - neetcode programming practice </a> <br><br>
@@ -152,34 +186,34 @@
             <br>
     
             <br>
-            <p># -- Linux ! --</p>
+            <p id="linux"># -- Linux ! --</p>
             <a href="https://sysprog21.github.io/lkmpg/"> the linux kernel module programming guide (2024) </a> <br><br>
             <a href="https://lwn.net/"> lwn.net - Linux Weekly News</a> <br><br>
             <a href="https://www.phoronix.com/"> phoronix.com - Linux/Open Source News site</a> <br><br>
             <br>
             
             <br>
-            <p># -- Medical  --</p>
+            <p id="medical"># -- Medical  --</p>
             <a href="https://www.youtube.com/watch?v=AU0__7UWB5E">youtube - Dark Angel Medical - Stop the Bleed Training  </a> <br><br>
             <br>
 
             <br>
-            <p># -- Microsoft Azure Stuff --</p>
+            <p id="microsoft-azure-stuff"># -- Microsoft Azure Stuff --</p>
             <a href="https://learn.microsoft.com/en-us/python/api/overview/azure/mgmt-network-readme?view=azure-python">Azure Python SDK </a> <br><br>
             <br>
     
             <br>
-            <p># -- Networking --</p>
+            <p id="networking"># -- Networking --</p>
             <a href="https://www.youtube.com/@RobRikerTechChannel/videos"> youtube - Rob Riker's Cisco Networking channel </a> <br><br>
             <br>
 
             <br>
-            <p># -- Online Learning --</p>
+            <p id="online-learning"># -- Online Learning --</p>
             <a href="https://ocw.mit.edu/">MIT open courseware </a> <br><br>
             <br>
             
             <br>
-            <p># -- Python --</p>
+            <p id="python"># -- Python --</p>
             <a href="https://pypi.org/">pypi - the python package repository </a> <br><br>
             <a href="https://www.fullstackpython.com/">full stack python </a> <br><br>
             <a href="https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">flask mega tutorial </a> <br><br>
@@ -188,7 +222,7 @@
     
             
             <br>
-            <p># -- Relax / Entertainment / Discussion / News --</p>
+            <p id="relax-entertainment-discussion-news"># -- Relax / Entertainment / Discussion / News --</p>
             <a href="https://www.youtube.com/watch?v=SC_y0C6t8H4">youtube - Agenda-Free TV (news) </a> <br><br>
             <a href="https://www.youtube.com/@BenStoeger187/videos">youtube - Ben Stoeger </a> <br><br>
             <a href="https://www.youtube.com/@geohotarchive">youtube - george hotz stream archive </a> <br><br>
@@ -197,13 +231,14 @@
             
     
             <br>
-            <p># -- Solar ! --</p>
+            <p id="solar"># -- Solar ! --</p>
             <a href="https://www.youtube.com/watch?v=l2JOUCo7iaM">youtube - solar powered minisplit heat/cool </a> <br><br>
             <a href="https://www.youtube.com/@solarcannonballrun/videos">youtube - Solar powered Tesla Cannonball Run  </a> <br><br>
             <a href="https://www.youtube.com/watch?v=OZvrTuhJhXs">youtube - solar panel connection how to </a> <br><br>
             <br>
 
-            <p># -- Space !! --</p>
+            <p id="space"># -- Space !! --</p>
+            <a href="https://www.youtube.com/@PhilipSloss">youtube - Philip Sloss. Reporting on the Artemis Program </a> <br><br>
             <a href="https://www.youtube.com/@MarsGuy">youtube - mars guy. discussion of mars rovers </a> <br><br>
             <a href="https://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html">Pixel Scale Solar System </a> <br><br>
             <a href="https://iss-sim.spacex.com/">SpaceX ISS Docking Sim </a> <br><br>
@@ -218,27 +253,19 @@
     
             
     
-            
-            
             <br>
-            <p># -- World Economy --</p>
+            <p id="world-economy"># -- World Economy --</p>
             <a href="https://www.youtube.com/@wgowshipping/videos">youtube - what is going on with shipping? </a> <br><br>
             <br>
 
             <br>
-            <p># -- X-plane stuff --</p>
+            <p id="x-plane-stuff"># -- X-plane stuff --</p>
             <a href="https://www.youtube.com/watch?v=TlYRh4ezgHs">youtube - Everything you need to know about VORs</a> <br><br>
             <a href="https://www.youtube.com/watch?v=7EobCaNhDCE">youtube - Cessna 172 gauge and autopilot walkthrough </a> <br><br>
             <a href="https://www.youtube.com/watch?v=guoO1dUIbLQ">youtube - Cessna 172 solo lesson practice  </a> <br><br>
             <a href="https://www.x-plane.com/manuals/S-TEC_Autopilot_Manual.pdf">S-TEC Autopilot Manual  </a> <br><br>
             
             <br>
-
-            
-    
-            
-            
-            
             <br><br>
             <p> # Have a great day! </p>
         </div>
@@ -328,4 +355,4 @@
             setInterval(updateMarketStatus, 60000);
         </script>
     </body>
-    </html>
+</html>
