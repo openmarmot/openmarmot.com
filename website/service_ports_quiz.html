@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ports – Recall Practice (Single Button)</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f8f9fa;
+      color: #222;
+    }
+    h1 {
+      text-align: center;
+      color: #1a3c5e;
+    }
+    .explanation {
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+      font-size: 0.95em;
+      line-height: 1.4;
+    }
+    #card {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+      min-height: 220px;
+    }
+    .field {
+      margin: 18px 0;
+      font-size: 1.3em;
+      line-height: 1.5;
+    }
+    .label {
+      font-weight: 600;
+      color: #2c3e50;
+      display: inline-block;
+      width: 140px;
+    }
+    .value {
+      color: #0066cc;
+      font-family: monospace;
+    }
+    .hidden {
+      background: #e0e0e0;
+      color: #e0e0e0;
+      border-radius: 4px;
+      padding: 3px 10px;
+      user-select: none;
+    }
+    .revealed {
+      background: transparent;
+      color: #0066cc;
+      padding: 3px 0;
+    }
+    .prompt {
+      font-size: 1.1em;
+      color: #444;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    button {
+      padding: 14px 32px;
+      font-size: 1.15em;
+      margin: 20px auto 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: block;
+      min-width: 180px;
+    }
+    button.show {
+      background: #e67e22;
+      color: white;
+    }
+    button.show:hover { background: #d35400; }
+    button.next {
+      background: #27ae60;
+      color: white;
+    }
+    button.next:hover { background: #219653; }
+  </style>
+</head>
+<body>
+
+  <h1>Common Ports – Recall Practice</h1>
+  <p class="explanation">
+    One field (Service or Port) is shown → try to recall the rest.<br>
+    Click the button to reveal → click again to get the next card.
+  </p>
+
+  <div id="card">
+    <div class="prompt" id="prompt"></div>
+    <div class="field"><span class="label">Service Name:</span> <span id="service" class="value"></span></div>
+    <div class="field"><span class="label">Port(s):</span>     <span id="ports"   class="value"></span></div>
+    <div class="field"><span class="label">Protocol:</span>   <span id="proto"   class="value hidden">?</span></div>
+    <div class="field"><span class="label">Description:</span><span id="desc"    class="value hidden">?</span></div>
+  </div>
+
+  <button id="action-btn" class="show">Show Answer</button>
+
+  <script>
+    const cards = [
+      { service: "FTP (File Transfer Protocol)",          ports: "20/21",         proto: "TCP",          desc: "21 = control / 20 = data" },
+      { service: "SSH (Secure Shell)",                    ports: "22",            proto: "TCP",          desc: "Encrypted remote login + file transfer" },
+      { service: "Telnet",                                ports: "23",            proto: "TCP",          desc: "Unencrypted remote access (insecure)" },
+      { service: "SMTP",                                  ports: "25",            proto: "TCP",          desc: "Sending mail between servers" },
+      { service: "DNS",                                   ports: "53",            proto: "TCP/UDP",      desc: "Name resolution (UDP most common)" },
+      { service: "DHCP",                                  ports: "67/68",         proto: "UDP",          desc: "Automatic IP address assignment" },
+      { service: "TFTP",                                  ports: "69",            proto: "UDP",          desc: "Trivial / very simple file transfer" },
+      { service: "HTTP",                                  ports: "80",            proto: "TCP",          desc: "Unencrypted web traffic" },
+      { service: "POP3",                                  ports: "110",           proto: "TCP",          desc: "Retrieve email – download to client" },
+      { service: "NTP",                                   ports: "123",           proto: "UDP",          desc: "Network time synchronization" },
+      { service: "NetBIOS",                               ports: "137–139",       proto: "137/138 UDP + 139 TCP", desc: "Legacy Windows file & printer sharing" },
+      { service: "IMAP",                                  ports: "143",           proto: "TCP",          desc: "Email sync – stays on server" },
+      { service: "SNMP",                                  ports: "161",           proto: "UDP",          desc: "Network device monitoring" },
+      { service: "LDAP",                                  ports: "389",           proto: "TCP",          desc: "Directory services (e.g. Active Directory)" },
+      { service: "HTTPS",                                 ports: "443",           proto: "TCP",          desc: "Encrypted web traffic (TLS)" },
+      { service: "SMB",                                   ports: "445",           proto: "TCP",          desc: "Modern Windows file & printer sharing" },
+      { service: "SIP (Session Initiation Protocol)",     ports: "5060",          proto: "UDP/TCP",      desc: "VoIP signaling – 5061 for secure/TLS" },
+      { service: "Syslog",                                ports: "514",           proto: "UDP",          desc: "Centralized system logging" },
+      { service: "SMTP Submission",                       ports: "587",           proto: "TCP",          desc: "Authenticated client email sending" },
+      { service: "MySQL / MariaDB",                       ports: "3306",          proto: "TCP",          desc: "Default database port" },
+      { service: "RDP (Remote Desktop Protocol)",         ports: "3389",          proto: "TCP",          desc: "Remote Windows desktop" },
+      { service: "HTTP Alternative / Proxy",              ports: "8080",          proto: "TCP",          desc: "Common alternate web port" }
+    ];
+
+    const elements = {
+      prompt:  document.getElementById("prompt"),
+      service: document.getElementById("service"),
+      ports:   document.getElementById("ports"),
+      proto:   document.getElementById("proto"),
+      desc:    document.getElementById("desc")
+    };
+
+    const btn = document.getElementById("action-btn");
+
+    let currentCard = null;
+    let showService = true;
+    let isRevealed = false;
+
+    function resetHidden() {
+      elements.proto.className = "value hidden";
+      elements.proto.textContent = "?";
+      elements.desc.className = "value hidden";
+      elements.desc.textContent = "?";
+      isRevealed = false;
+      btn.textContent = "Show Answer";
+      btn.className = "show";
+    }
+
+    function loadNewCard() {
+      resetHidden();
+      
+      const idx = Math.floor(Math.random() * cards.length);
+      currentCard = cards[idx];
+      showService = Math.random() < 0.5;
+
+      if (showService) {
+        elements.prompt.textContent = "What port(s) and protocol does this service use?";
+        elements.service.textContent = currentCard.service;
+        elements.service.className = "value revealed";
+        elements.ports.textContent = "?";
+        elements.ports.className = "value hidden";
+      } else {
+        elements.prompt.textContent = "What service uses this port?";
+        elements.service.textContent = "?";
+        elements.service.className = "value hidden";
+        elements.ports.textContent = currentCard.ports;
+        elements.ports.className = "value revealed";
+      }
+    }
+
+    function revealAll() {
+      elements.proto.textContent = currentCard.proto;
+      elements.proto.className = "value revealed";
+      
+      elements.desc.textContent = currentCard.desc;
+      elements.desc.className = "value revealed";
+
+      if (showService) {
+        elements.ports.textContent = currentCard.ports;
+        elements.ports.className = "value revealed";
+      } else {
+        elements.service.textContent = currentCard.service;
+        elements.service.className = "value revealed";
+      }
+
+      isRevealed = true;
+      btn.textContent = "Next Card";
+      btn.className = "next";
+    }
+
+    btn.onclick = () => {
+      if (!isRevealed) {
+        revealAll();
+      } else {
+        loadNewCard();
+      }
+    };
+
+    // Start
+    loadNewCard();
+  </script>
+</body>
+</html>
