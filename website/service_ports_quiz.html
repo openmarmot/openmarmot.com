@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ports – Recall Practice (Single Button)</title>
+  <title>Common Ports – Multiple Choice Quiz</title>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -29,7 +29,7 @@
       padding: 32px;
       border-radius: 12px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.12);
-      min-height: 220px;
+      min-height: 520px; /* Increased slightly to accommodate always-visible details */
     }
     .field {
       margin: 18px 0;
@@ -44,7 +44,6 @@
     }
     .value {
       color: #0066cc;
-      font-family: monospace;
     }
     .hidden {
       background: #e0e0e0;
@@ -63,6 +62,48 @@
       color: #444;
       margin-bottom: 24px;
       font-style: italic;
+      text-align: center;
+    }
+    #options {
+      margin: 30px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1.1em;
+    }
+    .option:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .option input {
+      display: none;
+    }
+    .option input:checked + span {
+      color: #0066cc;
+      font-weight: 600;
+    }
+    .option span {
+      display: block;
+    }
+    .correct {
+      background: #d4edda !important;
+      border-left: 5px solid #28a745;
+    }
+    .incorrect {
+      background: #f8d7da !important;
+      border-left: 5px solid #dc3545;
+    }
+    #details {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
     }
     button {
       padding: 14px 32px;
@@ -75,11 +116,11 @@
       display: block;
       min-width: 180px;
     }
-    button.show {
+    button.check {
       background: #e67e22;
       color: white;
     }
-    button.show:hover { background: #d35400; }
+    button.check:hover { background: #d35400; }
     button.next {
       background: #27ae60;
       color: white;
@@ -89,21 +130,28 @@
 </head>
 <body>
 
-  <h1>Common Ports – Recall Practice</h1>
-  <p class="explanation">
-    One field (Service or Port) is shown → try to recall the rest.<br>
-    Click the button to reveal → click again to get the next card.
-  </p>
+  <h1>Common Ports – Multiple Choice Quiz</h1>
 
   <div id="card">
     <div class="prompt" id="prompt"></div>
-    <div class="field"><span class="label">Service Name:</span> <span id="service" class="value"></span></div>
-    <div class="field"><span class="label">Port(s):</span>     <span id="ports"   class="value"></span></div>
-    <div class="field"><span class="label">Protocol:</span>   <span id="proto"   class="value hidden">?</span></div>
-    <div class="field"><span class="label">Description:</span><span id="desc"    class="value hidden">?</span></div>
+    
+    <div class="field" id="given-field">
+      <span class="label" id="given-label"></span>
+      <span class="value" id="given-value"></span>
+    </div>
+
+    <div id="options"></div>
+
+    <div id="details">
+      <strong>Full Details:</strong>
+      <div class="field"><span class="label">Service Name:</span> <span class="value hidden" id="full-service">?</span></div>
+      <div class="field"><span class="label">Port(s):</span> <span class="value hidden" id="full-ports">?</span></div>
+      <div class="field"><span class="label">Protocol:</span> <span class="value hidden" id="full-proto">?</span></div>
+      <div class="field"><span class="label">Description:</span><span class="value hidden" id="full-desc">?</span></div>
+    </div>
   </div>
 
-  <button id="action-btn" class="show">Show Answer</button>
+  <button id="action-btn" class="check">Check Answer</button>
 
   <script>
     const cards = [
@@ -132,81 +180,155 @@
     ];
 
     const elements = {
-      prompt:  document.getElementById("prompt"),
-      service: document.getElementById("service"),
-      ports:   document.getElementById("ports"),
-      proto:   document.getElementById("proto"),
-      desc:    document.getElementById("desc")
+      prompt: document.getElementById("prompt"),
+      givenLabel: document.getElementById("given-label"),
+      givenValue: document.getElementById("given-value"),
+      options: document.getElementById("options"),
+      fullService: document.getElementById("full-service"),
+      fullPorts: document.getElementById("full-ports"),
+      fullProto: document.getElementById("full-proto"),
+      fullDesc: document.getElementById("full-desc")
     };
 
     const btn = document.getElementById("action-btn");
 
     let currentCard = null;
-    let showService = true;
-    let isRevealed = false;
+    let questionType = true; // true = service given → guess ports
+    let correctValue = "";
+    let answered = false;
 
-    function resetHidden() {
-      elements.proto.className = "value hidden";
-      elements.proto.textContent = "?";
-      elements.desc.className = "value hidden";
-      elements.desc.textContent = "?";
-      isRevealed = false;
-      btn.textContent = "Show Answer";
-      btn.className = "show";
+    function shuffle(array) {
+      const arr = array.slice();
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
     }
 
-    function loadNewCard() {
-      resetHidden();
-      
+    function getRandomDistractors(n, valueFn) {
+      let others = cards.filter(c => c !== currentCard);
+      others = shuffle(others);
+      return others.slice(0, n).map(valueFn);
+    }
+
+    function resetDetails() {
+      elements.fullService.textContent = "?";
+      elements.fullService.className = "value hidden";
+
+      elements.fullPorts.textContent = "?";
+      elements.fullPorts.className = "value hidden";
+      elements.fullPorts.style.fontFamily = "";
+
+      elements.fullProto.textContent = "?";
+      elements.fullProto.className = "value hidden";
+      elements.fullProto.style.fontFamily = "";
+
+      elements.fullDesc.textContent = "?";
+      elements.fullDesc.className = "value hidden";
+    }
+
+    function loadNewQuestion() {
+      answered = false;
+      btn.textContent = "Check Answer";
+      btn.className = "check";
+      elements.options.innerHTML = "";
+      resetDetails();
+
       const idx = Math.floor(Math.random() * cards.length);
       currentCard = cards[idx];
-      showService = Math.random() < 0.5;
+      questionType = Math.random() < 0.5;
 
-      if (showService) {
-        elements.prompt.textContent = "What port(s) and protocol does this service use?";
-        elements.service.textContent = currentCard.service;
-        elements.service.className = "value revealed";
-        elements.ports.textContent = "?";
-        elements.ports.className = "value hidden";
+      let distractors;
+      let choices;
+
+      if (questionType) {
+        // Service given → guess ports
+        elements.prompt.textContent = "What port(s) does this service use?";
+        elements.givenLabel.textContent = "Service:";
+        elements.givenValue.textContent = currentCard.service;
+        correctValue = currentCard.ports;
+        distractors = getRandomDistractors(4, c => c.ports);
       } else {
-        elements.prompt.textContent = "What service uses this port?";
-        elements.service.textContent = "?";
-        elements.service.className = "value hidden";
-        elements.ports.textContent = currentCard.ports;
-        elements.ports.className = "value revealed";
+        // Ports given → guess service
+        elements.prompt.textContent = "What service uses these port(s)?";
+        elements.givenLabel.textContent = "Port(s):";
+        elements.givenValue.textContent = currentCard.ports;
+        elements.givenValue.style.fontFamily = "monospace";
+        correctValue = currentCard.service;
+        distractors = getRandomDistractors(4, c => c.service);
       }
+
+      choices = shuffle([correctValue, ...distractors]);
+
+      choices.forEach(choice => {
+        const label = document.createElement("label");
+        label.classList.add("option");
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "choice";
+        input.value = choice;
+
+        const span = document.createElement("span");
+        span.textContent = choice;
+
+        label.appendChild(input);
+        label.appendChild(span);
+        elements.options.appendChild(label);
+      });
     }
 
-    function revealAll() {
-      elements.proto.textContent = currentCard.proto;
-      elements.proto.className = "value revealed";
-      
-      elements.desc.textContent = currentCard.desc;
-      elements.desc.className = "value revealed";
-
-      if (showService) {
-        elements.ports.textContent = currentCard.ports;
-        elements.ports.className = "value revealed";
-      } else {
-        elements.service.textContent = currentCard.service;
-        elements.service.className = "value revealed";
+    function checkAnswer() {
+      const selected = document.querySelector('input[name="choice"]:checked');
+      if (!selected) {
+        alert("Please select an answer first!");
+        return;
       }
 
-      isRevealed = true;
-      btn.textContent = "Next Card";
+      const selectedValue = selected.value;
+      const isCorrect = selectedValue === correctValue;
+
+      // Disable all radios
+      document.querySelectorAll('input[name="choice"]').forEach(i => i.disabled = true);
+
+      // Highlight correct / incorrect
+      document.querySelectorAll(".option").forEach(label => {
+        const val = label.querySelector("input").value;
+        if (val === correctValue) label.classList.add("correct");
+        if (val === selectedValue && !isCorrect) label.classList.add("incorrect");
+      });
+
+      // Reveal full details
+      elements.fullService.textContent = currentCard.service;
+      elements.fullService.className = "value revealed";
+
+      elements.fullPorts.textContent = currentCard.ports;
+      elements.fullPorts.className = "value revealed";
+      elements.fullPorts.style.fontFamily = "monospace";
+
+      elements.fullProto.textContent = currentCard.proto;
+      elements.fullProto.className = "value revealed";
+      elements.fullProto.style.fontFamily = "monospace";
+
+      elements.fullDesc.textContent = currentCard.desc;
+      elements.fullDesc.className = "value revealed";
+
+      answered = true;
+      btn.textContent = "Next Question";
       btn.className = "next";
     }
 
     btn.onclick = () => {
-      if (!isRevealed) {
-        revealAll();
+      if (!answered) {
+        checkAnswer();
       } else {
-        loadNewCard();
+        loadNewQuestion();
       }
     };
 
     // Start
-    loadNewCard();
+    loadNewQuestion();
   </script>
 </body>
 </html>
