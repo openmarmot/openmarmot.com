@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Common Ports – Fill in the Blank Quiz</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f8f9fa;
+      color: #222;
+    }
+    h1 {
+      text-align: center;
+      color: #1a3c5e;
+    }
+    .instructions {
+      line-height: 1.5;
+      color: #444;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    #card {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    input[type="text"] {
+      width: 140px;
+      padding: 8px;
+      font-size: 1em;
+      font-family: monospace;
+    }
+    .status {
+      font-weight: bold;
+      min-width: 100px;
+    }
+    .port {
+      font-family: monospace;
+    }
+    .correct-row {
+      background: #d4edda;
+    }
+    .incorrect-row {
+      background: #f8d7da;
+    }
+    #score {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+    button {
+      padding: 14px 32px;
+      font-size: 1.15em;
+      margin: 30px auto 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: block;
+      min-width: 200px;
+      background: #e67e22;
+      color: white;
+    }
+    button:hover {
+      background: #d35400;
+    }
+    button.reset {
+      background: #27ae60;
+    }
+    button.reset:hover {
+      background: #219653;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Common Ports – Fill in the Blank Quiz</h1>
+
+  <div id="card">
+    <p class="instructions">
+      Fill in the port(s) for each service. Use <strong>/</strong> to separate distinct ports (e.g., 20/21) and <strong>-</strong> for ranges (e.g., 137-139).<br>
+      Spaces are ignored, so “20 / 21” and “20/21” both work. After you finish, click <strong>Validate Answers</strong>.
+    </p>
+
+    <table id="quiz-table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Your Port(s)</th>
+          <th>Status</th>
+          <th>Correct Port(s)</th>
+          <th>Protocol</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filled by JavaScript -->
+      </tbody>
+    </table>
+
+    <div id="score"></div>
+  </div>
+
+  <button id="action-btn">Validate Answers</button>
+
+  <script>
+    const cards = [
+      { service: "FTP (File Transfer Protocol)",          ports: "20/21",         proto: "TCP",                          desc: "21 = control / 20 = data" },
+      { service: "SSH (Secure Shell)",                    ports: "22",            proto: "TCP",                          desc: "Encrypted remote login + file transfer" },
+      { service: "Telnet",                                ports: "23",            proto: "TCP",                          desc: "Unencrypted remote access (insecure)" },
+      { service: "SMTP",                                  ports: "25",            proto: "TCP",                          desc: "Sending mail between servers" },
+      { service: "DNS",                                   ports: "53",            proto: "TCP/UDP",                      desc: "Name resolution (UDP most common)" },
+      { service: "DHCP",                                  ports: "67/68",         proto: "UDP",                          desc: "Automatic IP address assignment" },
+      { service: "TFTP",                                  ports: "69",            proto: "UDP",                          desc: "Trivial / very simple file transfer" },
+      { service: "HTTP",                                  ports: "80",            proto: "TCP",                          desc: "Unencrypted web traffic" },
+      { service: "POP3",                                  ports: "110",           proto: "TCP",                          desc: "Retrieve email – download to client" },
+      { service: "NTP",                                   ports: "123",           proto: "UDP",                          desc: "Network time synchronization" },
+      { service: "NetBIOS",                               ports: "137-139",       proto: "137/138 UDP + 139 TCP",        desc: "Legacy Windows file & printer sharing" },
+      { service: "IMAP",                                  ports: "143",           proto: "TCP",                          desc: "Email sync – stays on server" },
+      { service: "SNMP",                                  ports: "161",           proto: "UDP",                          desc: "Network device monitoring" },
+      { service: "LDAP",                                  ports: "389",           proto: "TCP",                          desc: "Directory services (e.g. Active Directory)" },
+      { service: "HTTPS",                                 ports: "443",           proto: "TCP",                          desc: "Encrypted web traffic (TLS)" },
+      { service: "SMB",                                   ports: "445",           proto: "TCP",                          desc: "Modern Windows file & printer sharing" },
+      { service: "Syslog",                                ports: "514",           proto: "UDP",                          desc: "Centralized system logging" },
+      { service: "SMTP Submission",                       ports: "587",           proto: "TCP",                          desc: "Authenticated client email sending" },
+      { service: "SIP (Session Initiation Protocol)",     ports: "5060",          proto: "UDP/TCP",                      desc: "VoIP signaling – 5061 for secure/TLS" },
+      { service: "MySQL / MariaDB",                       ports: "3306",          proto: "TCP",                          desc: "Default database port" },
+      { service: "RDP (Remote Desktop Protocol)",         ports: "3389",          proto: "TCP",                          desc: "Remote Windows desktop" },
+      { service: "HTTP Alternative / Proxy",              ports: "8080",          proto: "TCP",                          desc: "Common alternate web port" }
+    ];
+
+    const tableBody = document.querySelector("#quiz-table tbody");
+    const btn = document.getElementById("action-btn");
+    const scoreDiv = document.getElementById("score");
+    let validated = false;
+
+    function populateTable() {
+      tableBody.innerHTML = "";
+      cards.forEach(card => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${card.service}</td>
+          <td><input type="text" class="answer-input"></td>
+          <td class="status"></td>
+          <td class="correct-info port" style="display:none;">${card.ports}</td>
+          <td class="correct-info port" style="display:none;">${card.proto}</td>
+          <td class="correct-info" style="display:none;">${card.desc}</td>
+        `;
+        tr.dataset.correct = card.ports;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function validateAnswers() {
+      let correctCount = 0;
+      const rows = tableBody.rows;
+
+      for (let row of rows) {
+        const input = row.querySelector(".answer-input");
+        const statusCell = row.querySelector(".status");
+        const userAnswer = input.value;
+        const userNorm = userAnswer.trim().replace(/\s+/g, "");
+        const correctPorts = row.dataset.correct;
+
+        if (userNorm === correctPorts) {
+          statusCell.textContent = "Correct ✓";
+          statusCell.style.color = "green";
+          row.classList.add("correct-row");
+          correctCount++;
+        } else {
+          statusCell.textContent = "Incorrect ✗";
+          statusCell.style.color = "red";
+          row.classList.add("incorrect-row");
+        }
+
+        input.disabled = true;
+        row.querySelectorAll(".correct-info").forEach(cell => {
+          cell.style.display = "table-cell";
+        });
+      }
+
+      scoreDiv.innerHTML = `<strong>Score: ${correctCount} / ${cards.length} correct</strong>`;
+      btn.textContent = "Reset Quiz";
+      btn.classList.add("reset");
+      validated = true;
+    }
+
+    function resetQuiz() {
+      populateTable();
+      scoreDiv.innerHTML = "";
+      btn.textContent = "Validate Answers";
+      btn.classList.remove("reset");
+      validated = false;
+    }
+
+    btn.addEventListener("click", () => {
+      if (validated) {
+        resetQuiz();
+      } else {
+        validateAnswers();
+      }
+    });
+
+    // Initial load
+    populateTable();
+  </script>
+</body>
+</html>
