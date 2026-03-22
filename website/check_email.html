@@ -3,158 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Inspector</title>
+    <title>Email Inspector v2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        textarea { width: 100%; height: 150px; margin: 10px 0; }
-        button { padding: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        #result { margin-top: 20px; }
+        body { font-family: system-ui, sans-serif; }
+        pre { white-space: pre-wrap; word-break: break-all; }
+        .risk-critical { background-color: #fee2e2; color: #b91c1c; }
+        .risk-high { background-color: #fef3c7; color: #b45309; }
+        .risk-medium { background-color: #dbeafe; color: #1e40af; }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Email Inspector v2</h1>
+        <p class="text-gray-600 mb-6">Paste the full raw email source (headers + body) below</p>
 
-<h1>Email Inspector</h1>
-<textarea id="emailText" placeholder="Paste the plain text source of the email here..."></textarea>
-<br>
-<button onclick="inspectEmail()">Inspect Email</button>
-<div id="result"></div>
-
-<script>
-    function inspectEmail() {
-        const emailText = document.getElementById('emailText').value;
-        const resultDiv = document.getElementById('result');
+        <textarea id="emailText" class="w-full h-64 p-4 border rounded-xl font-mono text-sm" placeholder="Paste raw email here..."></textarea>
         
-        // Here you would implement more sophisticated scam detection logic.
-        // This is a very basic example:
-        
-        let analysis = {
-            subject: extractPattern(emailText,'Subject'),
-            from: extractPattern(emailText,'From',true),
-            to: extractPattern(emailText,'To',true),
-            xMailFrom: extractPattern(emailText,'X-Mail-from'),
-            xGetMessageSender: extractPattern(emailText,'X-Get-Message-Sender-Via'),
-            deliveredTo:extractPattern(emailText,'X-Delivered-to'),
-            originalDeliveredTo:extractPattern(emailText,'X-Original-Delivered-to')
-        };
+        <button onclick="inspectEmail()" 
+                class="mt-4 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition">
+            Analyze Email
+        </button>
 
-        let scamIndicators=checkForScamIndicators(emailText,analysis)
-        // Convert the array of scam indicators into a string where each item is on a new line
-        let indicatorsHtml = scamIndicators.length > 0 
-            ? scamIndicators.map(indicator => `<li>${indicator}</li>`).join('') 
-            : 'None detected';
+        <div id="result" class="mt-8"></div>
+    </div>
 
-        resultDiv.innerHTML = `<h2>Analysis Results:</h2>
-        <p><strong>Subject:</strong> ${analysis.subject || 'Not found'}</p>
-        <p><strong>From:</strong> ${analysis.from || 'Not found'}</p>
-        <p><strong>To:</strong> ${analysis.to || 'Not found'}</p>
-        <p><strong>X-Mail-from:</strong> ${analysis.xMailFrom || 'Not found'}</p>
-        <p><strong>X-Get-Message-Sender-Via:</strong> ${analysis.xGetMessageSender || 'Not found'}</p>
-        <p><strong>X-Original-Delivered-to:</strong> ${analysis.originalDeliveredTo || 'Not found'}</p>
-        <p><strong>X-Delivered-to:</strong> ${analysis.deliveredTo || 'Not found'}</p>
-        <p><strong>Possible Scam Indicators:</strong></p>
-        <ul>${indicatorsHtml}</ul>`;
-    }
-
-    function extractPattern(text, pattern, caseSensitive = false) {
-        // Escape special characters in the pattern to safely use in regex
-        const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-        // Determine the regex flags based on case sensitivity
-        const flags = caseSensitive ? 'm' : 'im'; // Add 'm' for multiline
-
-        // Construct the regex using word boundaries and line start anchor
-        const regex = new RegExp(`^${escapedPattern}: (.*)`, flags);
-
-        const match = text.match(regex);
-        return match ? match[1].trim() : null;
-    }
-
-    function extractFrom(text) {
-        const match = text.match(/From: (.*)/);
-        return match ? match[1].trim() : null;
-    }
-
-    function extractTo(text) {
-        const match = text.match(/To: (.*)/);
-        return match ? match[1].trim() : null;
-    }
-
-    function checkForScamIndicators(text, analysis) {
-        let indicators = [];
-
-        // Urgent language and suspicious phrases
-        if (/urgent|immediate action|verify your account|click here|you've won|reset password|verify identity|payment|invoice|authorization|exclusive offer|free gift/i.test(text)) {
-            indicators.push("Urgency or suspicious phrases");
+    <script>
+        function tailwindInit() {
+            // Tailwind script already loaded
         }
 
-        // Missing standard headers
-        if (!text.includes('From:') || !text.includes('To:')) {
-            indicators.push("Missing standard email headers");
-        }
+        function parseHeaders(raw) {
+            const parts = raw.split(/\r?\n\r?\n/);
+            const headerText = parts[0];
+            const body = parts.slice(1).join('\n\n');
+            
+            const headers = {};
+            const lines = headerText.split(/\r?\n/);
+            let currentKey = null;
 
-        // To delivered to mismatch
-        if (analysis.deliveredTo && analysis.originalDeliveredTo) {
-            if (analysis.deliveredTo !== analysis.originalDeliveredTo) {
-                indicators.push("Delivered-to and Original-Delivered-to don't match. The email may be relayed for fraud purposes");
+            for (let line of lines) {
+                if (line.startsWith(' ') || line.startsWith('\t')) {
+                    // Continuation of previous header
+                    if (currentKey) headers[currentKey][headers[currentKey].length - 1] += ' ' + line.trim();
+                } else {
+                    const match = line.match(/^([^:]+):\s*(.*)$/);
+                    if (match) {
+                        currentKey = match[1].trim().toLowerCase();
+                        if (!headers[currentKey]) headers[currentKey] = [];
+                        headers[currentKey].push(match[2].trim());
+                    }
+                }
             }
+            return { headers, body };
         }
 
-        // To and delivered to mismatch
-        if (analysis.to && analysis.deliveredTo) {
-            if (analysis.to !== analysis.deliveredTo) {
-                indicators.push('To: does not match DeliveredTo:')
+        function parseAuthResults(authLines) {
+            let spf = 'unknown', dkim = 'unknown', dmarc = 'unknown', policy = 'none';
+            const text = (authLines || []).join(' ').toLowerCase();
+            
+            if (text.includes('spf=pass')) spf = 'pass';
+            else if (text.includes('spf=softfail')) spf = 'softfail';
+            else if (text.includes('spf=fail')) spf = 'fail';
+
+            if (text.includes('dkim=pass')) dkim = 'pass';
+            else if (text.includes('dkim=none')) dkim = 'none';
+            else if (text.includes('dkim=fail')) dkim = 'fail';
+
+            if (text.includes('dmarc=pass')) dmarc = 'pass';
+            else if (text.includes('dmarc=fail')) dmarc = 'fail';
+
+            if (text.includes('policy=reject')) policy = 'reject';
+            else if (text.includes('policy=quarantine')) policy = 'quarantine';
+
+            return { spf, dkim, dmarc, policy };
+        }
+
+        function extractLinks(body) {
+            const linkRegex = /<a[^>]+href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi;
+            const links = [];
+            let match;
+            while ((match = linkRegex.exec(body)) !== null) {
+                links.push({
+                    href: match[1].trim(),
+                    text: match[2].trim().replace(/<[^>]+>/g, '')
+                });
             }
+            return links;
         }
 
-        // Inconsistent headers - Check Return-Path vs From
-        const returnPath = extractPattern(text, 'Return-Path');
-        if (returnPath && analysis.from && !returnPath.includes(analysis.from.split('@')[1])) {
-            indicators.push("Return-Path does not match the domain in the From address.");
-        }
+        function calculateRisk(headers, auth, links, body) {
+            let score = 0;
+            const reasons = [];
 
-        // Detect suspicious Unicode characters (e.g., Cyrillic letters in Latin domains)
-        if (/[^\x00-\x7F]/.test(analysis.from) || /[^\x00-\x7F]/.test(analysis.xMailFrom)){
-            indicators.push("Suspicious non-ASCII characters detected in the From address.");
-        }
+            const from = headers.from ? headers.from[0] : '';
+            const to = headers.to ? headers.to[0] : '';
+            const returnPath = headers['return-path'] ? headers['return-path'][0] : '';
+            const domain = (from.match(/@([\w.-]+)/) || [''])[1];
 
-        // Analyze received headers for unusual routing (basic check for now)
-        const receivedHeaders = text.match(/Received: (.*)/g);
-        if (receivedHeaders && receivedHeaders.length > 3) {
-            indicators.push("Multiple 'Received' headers detected, which may indicate the email was routed through unusual paths.");
-        }
-
-        // Check for mismatched URLs
-        const mismatchedUrls = detectMismatchedUrls(text);
-        if (mismatchedUrls.length > 0) {
-            indicators.push(`Mismatched URLs detected: ${mismatchedUrls.join(', ')}`);
-        }
-
-        // Add more checks as needed
-        return indicators;
-    }
-
-    function detectMismatchedUrls(text) {
-        let mismatchedUrls = [];
-        const urlRegex = /<a href="([^"]+)">([^<]+)<\/a>/g;
-        let match;
-
-        while ((match = urlRegex.exec(text)) !== null) {
-            const actualUrl = match[1].trim();
-            const displayedText = match[2].trim();
-
-            // Check if displayed text looks like a URL but does not match the actual URL
-            if (isLikelyUrl(displayedText) && !actualUrl.includes(displayedText)) {
-                mismatchedUrls.push(`Displayed: ${displayedText}, Actual: ${actualUrl}`);
+            // Self-spoof detection
+            if (domain && to.includes(domain) && (auth.spf !== 'pass' || auth.dkim !== 'pass')) {
+                score += 35;
+                reasons.push("Self-domain spoofing detected (From matches your domain but authentication failed)");
             }
-        }
-        return mismatchedUrls;
-    }
 
-    function isLikelyUrl(text) {
-        // Basic check to determine if a string looks like a URL
-        return /^(http:\/\/|https:\/\/|www\.)/.test(text) || /\.\w{2,}$/.test(text);
-    }
-</script>
+            // Auth failures
+            if (auth.spf === 'softfail' || auth.spf === 'fail') { score += 20; reasons.push("SPF " + auth.spf); }
+            if (auth.dkim === 'none' || auth.dkim === 'fail') { score += 15; reasons.push("DKIM " + auth.dkim); }
+            if (auth.dmarc === 'fail' && auth.policy === 'none') { score += 25; reasons.push("DMARC fail with policy=none (no protection)"); }
+
+            // Spam headers
+            if (headers['x-spamd-status'] && headers['x-spamd-status'][0].includes('Spam')) {
+                score += 15; reasons.push("Server marked as Spam (X-Spamd-Status)");
+            }
+
+            // Suspicious links
+            const suspiciousLinks = links.filter(l => 
+                l.href.includes('t.co') || 
+                l.href.includes('.cc/') || 
+                l.href.length < 30 && l.text.includes('http')
+            );
+            if (suspiciousLinks.length > 0) {
+                score += 30;
+                reasons.push(`Suspicious shortener/phishing link detected (${suspiciousLinks.length} links)`);
+            }
+
+            // Financial urgency
+            if (/dispute|chargeback|reversal|\$|950\.50|chase/i.test(body)) {
+                score += 15;
+                reasons.push("Banking/urgent financial language");
+            }
+
+            return { score: Math.min(100, score), reasons, suspiciousLinks };
+        }
+
+        function inspectEmail() {
+            const raw = document.getElementById('emailText').value.trim();
+            if (!raw) return alert("Paste an email first!");
+
+            const { headers, body } = parseHeaders(raw);
+            const authLines = headers['authentication-results'] || [];
+            const auth = parseAuthResults(authLines);
+            const links = extractLinks(body);
+            const risk = calculateRisk(headers, auth, links, body);
+
+            let html = `
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="text-5xl font-bold ${risk.score > 70 ? 'risk-critical' : risk.score > 40 ? 'risk-high' : 'risk-medium'} px-6 py-2 rounded-2xl">
+                            ${risk.score}/100
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold">Risk Assessment</h2>
+                            <p class="text-gray-500">Higher = more likely scam/phish</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Authentication -->
+                        <div class="border rounded-xl p-6">
+                            <h3 class="font-semibold mb-4 text-lg">Authentication Analysis</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between"><span class="font-medium">SPF:</span> <span class="${auth.spf === 'pass' ? 'text-green-600' : 'text-red-600'}">${auth.spf}</span></div>
+                                <div class="flex justify-between"><span class="font-medium">DKIM:</span> <span class="${auth.dkim === 'pass' ? 'text-green-600' : 'text-red-600'}">${auth.dkim}</span></div>
+                                <div class="flex justify-between"><span class="font-medium">DMARC:</span> <span class="${auth.dmarc === 'pass' ? 'text-green-600' : 'text-red-600'}">${auth.dmarc} (policy: ${auth.policy})</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="border rounded-xl p-6">
+                            <h3 class="font-semibold mb-4 text-lg">Links Found (${links.length})</h3>
+                            <div class="max-h-64 overflow-auto text-sm">
+                                ${links.length ? links.map(l => `
+                                    <div class="mb-3 p-3 bg-gray-100 rounded-lg">
+                                        <strong>Text:</strong> ${l.text}<br>
+                                        <strong>Real URL:</strong> <a href="${l.href}" target="_blank" class="text-blue-600 break-all">${l.href}</a>
+                                    </div>`).join('') : '<p class="text-gray-500">No links found</p>'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Indicators -->
+                    <div class="mt-8 border rounded-xl p-6">
+                        <h3 class="font-semibold mb-4 text-lg">Scam Indicators</h3>
+                        <ul class="space-y-2">
+                            ${risk.reasons.map(r => `<li class="flex items-start gap-2"><span class="text-red-500">●</span> ${r}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Raw Headers Summary -->
+                    <details class="mt-8">
+                        <summary class="font-semibold cursor-pointer">Full Parsed Headers (click to expand)</summary>
+                        <pre class="mt-4 text-xs bg-gray-900 text-gray-300 p-4 rounded-xl overflow-auto">${JSON.stringify(headers, null, 2)}</pre>
+                    </details>
+                </div>
+            `;
+
+            document.getElementById('result').innerHTML = html;
+        }
+
+        // Auto-init Tailwind
+        window.onload = tailwindInit;
+    </script>
 </body>
 </html>
