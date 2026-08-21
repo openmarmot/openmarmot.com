@@ -1,0 +1,100 @@
+# openmarmot.com links
+#
+# format:
+#   # this is a comment
+#   [Section name]
+#   url | description
+#
+# regenerate the site with: python3 generate.py
+
+[My stuff]
+https://github.com/openmarmot | my github. check out the TWE project in particular
+./ip.html | Get your public IP address and browser user info
+./dry_fire.html | Training aid for competitive shooting sports
+./life.html | Visualize how many weeks you've lived, and how many you have left on average
+./check_email.html | Check a raw text email for useful header info
+./aws_vpc_calc.html | Calculate CIDR networks for a AWS VPC
+./token_estimator.html | Get a rough estimate of the token count (use for LLM stuff)
+./service_ports_quiz.html | Common certs and ports quiz for security certs (multiple choice)
+./service_ports_fill_in_quiz.html | Common certs and ports quiz for security certs (fill in the blank)
+
+[Stuff i am into at the moment]
+https://www.youtube.com/@FutureCanoe | youtube - FutureCanoe. Cooking or something
+https://www.youtube.com/@whatdamath | youtube - Anton Petrov - science stuff
+https://www.youtube.com/@grant_harting | youtube - Grant Harting - pharmacist
+
+[AI / Local LLM Inference / AI+Coding Stuff]
+https://artificialanalysis.ai/ | artificialanalysis.ai ai benchmarks and analysis
+
+[Amazon AWS Stuff]
+https://aws.amazon.com/new | AWS News Feed
+https://region-comparison.aws.com | AWS Cloudformation Spec Comparison between regions
+https://github.com/SummitRoute/aws_breaking_changes | A github repo that tracks AWS breaking changes / deprecations
+https://instances.vantage.sh/ | instances.vantage.sh - Superb tool for comparing EC2 instance types
+https://github.com/amazonlinux/amazon-linux-2023 | github - Amazon Linux 2023 - Amazon's current Linux OS
+https://github.com/aws-samples | github - AWS Samples - over 5k repos with aws sample code
+https://github.com/boto/boto3 | github - Boto3 - the AWS SDK for Python
+https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html | aws - Lambda function handlers in go
+
+[Ansible Stuff]
+https://github.com/ansible/ansible | Github.com - Ansible Github repo
+https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html | docs.ansible.com - AWS Ansible collection
+
+[Aviation / Auto General]
+https://www.youtube.com/@therealjimmysworld | youtube - Jimmys World - buying and restoring airplanes.
+https://www.youtube.com/@StigAviation/videos | youtube - stig aviation - aircraft maint.
+https://www.youtube.com/@steveo1kinevo/videos | youtube - pilot - stevo1kinevo
+https://www.faa.gov/regulations_policies/handbooks_manuals/aviation | FAA - Free handbooks and manuals
+https://www.youtube.com/@GregsAirplanesandAutomobiles | youtube - Greg's Airplanes and Automobiles
+
+[Aviation Tools]
+https://www.liveatc.net/ | liveatc.net - live air traffic control radio
+https://www.airnav.com/airports/ | airnav.com - airport info
+https://skyvector.com/ | Skyvector - Aeronautical charts
+
+[Best Government Website]
+https://time.gov/ | time.gov - absolute best US time zone website ever
+
+[Chart / Diagram Tools]
+https://draw.io/ | draw.io - great for making cloud architecture diagrams
+https://sankeymatic.com/ | sankeymatic.com - make your own Sankey diagrams
+
+[Future tech+science jobs]
+https://www.spacex.com/careers/ | spacex jobs
+https://neuralink.com/careers/ | Neuralink jobs
+https://www.tesla.com/careers | Tesla jobs
+
+[Go / Golang]
+https://google.github.io/styleguide/go/guide | Go style guide
+
+[Javascript]
+https://www.npmjs.com | npm - javascript package manager
+
+[Job search / career stuff]
+https://hiring.cafe/ | hiring.cafe - job search website
+
+[Linux !]
+https://lwn.net/ | lwn.net - Linux Weekly News
+https://www.phoronix.com/ | phoronix.com - Linux/Open Source News site
+
+[Medical]
+https://www.youtube.com/watch?v=AU0__7UWB5E | youtube - Dark Angel Medical - Stop the Bleed Training
+
+[Python]
+https://pypi.org/ | pypi - the python package repository
+https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python | github - Kalman and Bayesian Filters in Python
+
+[Space !!]
+https://www.spaceatlas.tech/ | spaceatlas.tech - objects in our solar system
+https://www.youtube.com/@PhilipSloss | youtube - Philip Sloss. Reporting on the Artemis Program
+https://www.youtube.com/@MarsGuy | youtube - mars guy. discussion of mars rovers
+https://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html | Pixel Scale Solar System
+https://iss-sim.spacex.com/ | SpaceX ISS Docking Sim
+https://waitbutwhy.com/2014/05/fermi-paradox.html | Waitbutwhy - Fermi Paradox
+https://caseyhandmer.wordpress.com/ | Casey Handmer's blog - lots of great space and future tech stuff
+https://orbital-mechanics.space/intro.html | Orbital Mechanics and Astrodynamics
+https://www.youtube.com/watch?v=ND2TeNfcmKA | youtube - Toxic Propellant Hazards In Rocketry 1966 NASA
+https://www.swpc.noaa.gov/ | NOAA Space Weather Prediction Center
+
+[World Economy]
+https://www.youtube.com/@wgowshipping/videos | youtube - what is going on with shipping?
