@@ -3,177 +3,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>openmarmot.com</title>
-    <link rel="preload" href="images/dani.JPG" as="image">
+    <title>have a nice day!</title>
     <style>
-        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
         body {
-            margin: 0;
-            min-height: 100vh;
-            color: #f4f0ea;
-            font: 18px/1.55 system-ui, sans-serif;
-            background-color: #1c1612;
-            background-image: url("images/dani.JPG");
-            background-position: right top;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        main {
-            max-width: 36rem;
-            margin: 2rem auto 2rem 2rem;
-            padding: 1.75rem 1.75rem 2rem;
-            background: rgba(12, 8, 6, 0.86);
-            border-radius: 12px;
-        }
-        p { margin: 0 0 1rem; }
-        .outro { margin: 1.75rem 0 0; }
-        h2 {
-            margin: 1.5rem 0 0.5rem;
-            font-size: 0.95rem;
-            font-weight: 650;
-            letter-spacing: 0.02em;
-            color: #e2c29a;
-        }
-        ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        li { margin: 0.4rem 0; }
-        a {
-            color: #fff;
-            text-decoration: underline;
-            text-underline-offset: 0.18em;
-            text-decoration-color: rgba(255, 255, 255, 0.45);
-        }
-        a:hover {
-            color: #ffb020;
-            text-decoration-color: #ffb020;
-        }
-        @media (max-width: 44rem) {
-            main {
-                margin: 0;
-                min-height: 100vh;
-                border-radius: 0;
-            }
+            display: grid;
+            place-items: center;
+            background: #333;
+            color: #39ff14;
+            font: 2.5rem/1.2 system-ui, sans-serif;
         }
     </style>
 </head>
 <body>
-    <main>
-        <p>welcome to openmarmot.com.</p>
-        <p>here are some interesting web links.</p>
-        <h2>My stuff</h2>
-        <ul>
-            <li><a href="https://github.com/openmarmot">my github. check out the TWE project in particular</a></li>
-            <li><a href="./ip.html">Get your public IP address and browser user info</a></li>
-            <li><a href="./dry_fire.html">Training aid for competitive shooting sports</a></li>
-            <li><a href="./life.html">Visualize how many weeks you&#x27;ve lived, and how many you have left on average</a></li>
-            <li><a href="./check_email.html">Check a raw text email for useful header info</a></li>
-            <li><a href="./aws_vpc_calc.html">Calculate CIDR networks for a AWS VPC</a></li>
-            <li><a href="./token_estimator.html">Get a rough estimate of the token count (use for LLM stuff)</a></li>
-            <li><a href="./service_ports_quiz.html">Common certs and ports quiz for security certs (multiple choice)</a></li>
-            <li><a href="./service_ports_fill_in_quiz.html">Common certs and ports quiz for security certs (fill in the blank)</a></li>
-        </ul>
-        <h2>Stuff i am into at the moment</h2>
-        <ul>
-            <li><a href="https://www.youtube.com/@FutureCanoe">youtube - FutureCanoe. Cooking or something</a></li>
-            <li><a href="https://www.youtube.com/@whatdamath">youtube - Anton Petrov - science stuff</a></li>
-        </ul>
-        <h2>AI / Local LLM Inference / AI+Coding Stuff</h2>
-        <ul>
-            <li><a href="https://artificialanalysis.ai/">artificialanalysis.ai ai benchmarks and analysis</a></li>
-        </ul>
-        <h2>Amazon AWS Stuff</h2>
-        <ul>
-            <li><a href="https://aws.amazon.com/new">AWS News Feed</a></li>
-            <li><a href="https://region-comparison.aws.com">AWS Cloudformation Spec Comparison between regions</a></li>
-            <li><a href="https://github.com/SummitRoute/aws_breaking_changes">A github repo that tracks AWS breaking changes / deprecations</a></li>
-            <li><a href="https://instances.vantage.sh/">instances.vantage.sh - Superb tool for comparing EC2 instance types</a></li>
-            <li><a href="https://github.com/amazonlinux/amazon-linux-2023">github - Amazon Linux 2023 - Amazon&#x27;s current Linux OS</a></li>
-            <li><a href="https://github.com/aws-samples">github - AWS Samples - over 5k repos with aws sample code</a></li>
-            <li><a href="https://github.com/boto/boto3">github - Boto3 - the AWS SDK for Python</a></li>
-            <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html">aws - Lambda function handlers in go</a></li>
-        </ul>
-        <h2>Ansible Stuff</h2>
-        <ul>
-            <li><a href="https://github.com/ansible/ansible">Github.com - Ansible Github repo</a></li>
-            <li><a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html">docs.ansible.com - AWS Ansible collection</a></li>
-        </ul>
-        <h2>Aviation / Auto General</h2>
-        <ul>
-            <li><a href="https://www.youtube.com/@therealjimmysworld">youtube - Jimmys World - buying and restoring airplanes.</a></li>
-            <li><a href="https://www.youtube.com/@StigAviation/videos">youtube - stig aviation - aircraft maint.</a></li>
-            <li><a href="https://www.youtube.com/@steveo1kinevo/videos">youtube - pilot - stevo1kinevo</a></li>
-            <li><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation">FAA - Free handbooks and manuals</a></li>
-            <li><a href="https://www.youtube.com/@GregsAirplanesandAutomobiles">youtube - Greg&#x27;s Airplanes and Automobiles</a></li>
-        </ul>
-        <h2>Aviation Tools</h2>
-        <ul>
-            <li><a href="https://www.liveatc.net/">liveatc.net - live air traffic control radio</a></li>
-            <li><a href="https://www.airnav.com/airports/">airnav.com - airport info</a></li>
-            <li><a href="https://skyvector.com/">Skyvector - Aeronautical charts</a></li>
-        </ul>
-        <h2>Best Government Website</h2>
-        <ul>
-            <li><a href="https://time.gov/">time.gov - absolute best US time zone website ever</a></li>
-        </ul>
-        <h2>Chart / Diagram Tools</h2>
-        <ul>
-            <li><a href="https://draw.io/">draw.io - great for making cloud architecture diagrams</a></li>
-            <li><a href="https://sankeymatic.com/">sankeymatic.com - make your own Sankey diagrams</a></li>
-        </ul>
-        <h2>Future tech+science jobs</h2>
-        <ul>
-            <li><a href="https://www.spacex.com/careers/">spacex jobs</a></li>
-            <li><a href="https://neuralink.com/careers/">Neuralink jobs</a></li>
-            <li><a href="https://www.tesla.com/careers">Tesla jobs</a></li>
-        </ul>
-        <h2>Go / Golang</h2>
-        <ul>
-            <li><a href="https://google.github.io/styleguide/go/guide">Go style guide</a></li>
-        </ul>
-        <h2>Javascript</h2>
-        <ul>
-            <li><a href="https://www.npmjs.com">npm - javascript package manager</a></li>
-        </ul>
-        <h2>Job search / career stuff</h2>
-        <ul>
-            <li><a href="https://hiring.cafe/">hiring.cafe - job search website</a></li>
-        </ul>
-        <h2>Linux !</h2>
-        <ul>
-            <li><a href="https://lwn.net/">lwn.net - Linux Weekly News</a></li>
-            <li><a href="https://www.phoronix.com/">phoronix.com - Linux/Open Source News site</a></li>
-        </ul>
-        <h2>Medical</h2>
-        <ul>
-            <li><a href="https://www.youtube.com/watch?v=AU0__7UWB5E">youtube - Dark Angel Medical - Stop the Bleed Training</a></li>
-        </ul>
-        <h2>Python</h2>
-        <ul>
-            <li><a href="https://pypi.org/">pypi - the python package repository</a></li>
-            <li><a href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">github - Kalman and Bayesian Filters in Python</a></li>
-        </ul>
-        <h2>Space !!</h2>
-        <ul>
-            <li><a href="https://www.spaceatlas.tech/">spaceatlas.tech - objects in our solar system</a></li>
-            <li><a href="https://www.youtube.com/@PhilipSloss">youtube - Philip Sloss. Reporting on the Artemis Program</a></li>
-            <li><a href="https://www.youtube.com/@MarsGuy">youtube - mars guy. discussion of mars rovers</a></li>
-            <li><a href="https://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html">Pixel Scale Solar System</a></li>
-            <li><a href="https://iss-sim.spacex.com/">SpaceX ISS Docking Sim</a></li>
-            <li><a href="https://waitbutwhy.com/2014/05/fermi-paradox.html">Waitbutwhy - Fermi Paradox</a></li>
-            <li><a href="https://caseyhandmer.wordpress.com/">Casey Handmer&#x27;s blog - lots of great space and future tech stuff</a></li>
-            <li><a href="https://orbital-mechanics.space/intro.html">Orbital Mechanics and Astrodynamics</a></li>
-            <li><a href="https://www.youtube.com/watch?v=ND2TeNfcmKA">youtube - Toxic Propellant Hazards In Rocketry 1966 NASA</a></li>
-            <li><a href="https://www.swpc.noaa.gov/">NOAA Space Weather Prediction Center</a></li>
-        </ul>
-        <h2>World Economy</h2>
-        <ul>
-            <li><a href="https://www.youtube.com/@wgowshipping/videos">youtube - what is going on with shipping?</a></li>
-        </ul>
-        <p class="outro">have a good day!</p>
-    </main>
+    have a nice day!
 </body>
 </html>
